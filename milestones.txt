@@ -1,0 +1,38 @@
+// Data Structures Project
+// Kathryn Lutz, Grace Milton, Roann Yanes
+// milestones.txt
+
+This document is our iniital set of milestones to be completed over spring break:
+
+Determine how the output of project should be formatted (Total 11 points)
+-------------------------------------------------------------------------
+
+ +5 Research how to make a Google Chrome extension
+ +5 Research how to make a website
+ +1 Reasearch other possible formats
+
+Practice and learn programming languages other than C++ (Total 15 points)
+------------------------------------------------------------------------
+
+ +10 Practice Python and learn more about its usage and capabilities
+ +5 Look into JavaScript
+
+Research APIs (Total 10 points)
+-------------------------------
+
+ +3 See if there's a Netflix API
+ +7 Look into the IMDb API
+
+User Input (Total 3 points)
+---------------------------
+
+ +3 Come up with a questionnaire to get user input to determine what should be in playlist
+
+Repository (Total 1 point)
+-------------------------
+
+ +1 Make sure every group member has a GitHub and create a repository
+
+
+Total: 40 points
+
