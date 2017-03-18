@@ -2,11 +2,9 @@
 
 # Program: questionnaire.py 
 # Author: Roann Yanes
-
 # This program acts as evidence of executable code that I have checked into our repository.
-#
-# This program asks the user a series of questions to figure out the user's prefernces and to create a personalized Netflix watching schedule for the user. It is basically a questionnaire. The program outputs the user's responses to the terminal in a nicely formatted way.
-#
+# This program asks the user a series of questions to figure out the user's preferences to create a personalized Netflix watching schedule for the user. 
+# It is basically a questionnaire. The program outputs the user's responses to the terminal in a nicely formatted way.
 # To run the program, just enter './questionnaire.py' at the command line.  
 
 import os
