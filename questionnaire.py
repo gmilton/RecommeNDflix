@@ -23,7 +23,7 @@ QUESTION4 = 'What emotion are you feeling right now? '
 QUESTION5 = 'How many hours a day would you like to watch Netflix? '
 QUESTION6 = 'What days would you like to watch Netflix?  Please enter each day on a separate line, and enter a blank line when done: '
 
-# These are the variables that we will store the user's responses in.
+# These are the variables that store the user's responses.
 
 NAME = ' '
 GENRE = ' '
