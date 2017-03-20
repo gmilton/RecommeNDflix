@@ -28,6 +28,7 @@ EPISODE_LIST = [1, 1, 1, 1, 1]
 MAX_LIST = [0, 0, 0, 0, 0]
 MAX=0
 RED='\033[0;31m'
+DEFAULT_COLOR='\033[38;5;247m'
 REQ_LIST = [{}, {}, {}, {}, {}]
 
 # Usage Function
@@ -41,19 +42,19 @@ def usage(status=0):
 
 # Print Function
 def print_episode(INDEX):
-   print NICKNAME_LIST[INDEX]+'['+str(SEASON_LIST[INDEX])+'.'+str(EPISODE_LIST[INDEX])+']','-',
+   print DEFAULT_COLOR+NICKNAME_LIST[INDEX]+'['+str(SEASON_LIST[INDEX])+'.'+str(EPISODE_LIST[INDEX])+']','-',
 
 # Print in Color Function
 def print_color(INDEX, COLOR):
-   print COLOR+NICKNAME_LIST[INDEX]+'['+str(SEASON_LIST[INDEX])+'.'+str(EPISODE_LIST[INDEX])+']'+'\033[38;5;247m','-',
+   print COLOR+NICKNAME_LIST[INDEX]+'['+str(SEASON_LIST[INDEX])+'.'+str(EPISODE_LIST[INDEX])+']'+DEFAULT_COLOR,'-',
 
 # Print Last Function
 def print_last(INDEX):
-   print NICKNAME_LIST[INDEX]+'['+str(SEASON_LIST[INDEX])+'.'+str(EPISODE_LIST[INDEX])+']'
+   print DEFAULT_COLOR+NICKNAME_LIST[INDEX]+'['+str(SEASON_LIST[INDEX])+'.'+str(EPISODE_LIST[INDEX])+']'
 
 # Print Last Line in Color Function
 def print_last_color(INDEX, COLOR):
-   print COLOR+NICKNAME_LIST[INDEX]+'['+str(SEASON_LIST[INDEX])+'.'+str(EPISODE_LIST[INDEX])+']'+'\033[38;5;247m'
+   print COLOR+NICKNAME_LIST[INDEX]+'['+str(SEASON_LIST[INDEX])+'.'+str(EPISODE_LIST[INDEX])+']'+DEFAULT_COLOR
 
 # Parse command line options
 args = sys.argv[1:]
