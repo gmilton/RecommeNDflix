@@ -14,9 +14,35 @@ def main():
     background.fill((185, 9, 11))
 
     # Display title screen
-    font = pygame.font.Font(None, 36)
-    text = font.render("RecommeNDflix", 1, (10, 10, 10))
-    background.blit(text, (200,100))
+    outline_font = pygame.font.Font(None, 52)
+    outline = outline_font.render("RecommeNDflix", 1, (10, 10, 10))
+    font = pygame.font.Font(None, 52)
+    text = font.render("RecommeNDflix", 1, (255, 255, 255))
+    background.blit(outline, (165,99)) # 1 up, 1 left
+    background.blit(outline, (166,99))
+    background.blit(outline, (167,99))
+    background.blit(outline, (168,99))
+    background.blit(outline, (169,99))
+    #background.blit(outline, (170,99)) # 1 down, 1 left
+    #background.blit(outline, (171,100)) 
+    #background.blit(outline, (172,101))
+    #background.blit(outline, (173,102))
+    #background.blit(outline, (163,100)) # 1 up, 1 left
+    #background.blit(outline, (164,100))
+    background.blit(outline, (165,100))
+    background.blit(outline, (166,100))
+    background.blit(outline, (167,100))
+    background.blit(outline, (168,101)) # 1 down, 1 left
+    background.blit(outline, (169,102))
+    background.blit(outline, (170,103))
+    background.blit(outline, (171,104))    
+    #background.blit(outline, (169,102))
+    #background.blit(outline, (174,103))
+    #background.blit(outline, (175,104))
+    #background.blit(outline, (176,105))
+    #background.blit(outline, (173,108))
+    #background.blit(outline, (174,109))
+    background.blit(text, (167,100))
     #textpos = text.get_rect()
     #textpos.centerx = background.get_rect().centerx
     #textpos.centery = background.get_rect().centery
