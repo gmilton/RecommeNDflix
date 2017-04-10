@@ -11,7 +11,7 @@ def main():
     #  background
     background = pygame.Surface(screen.get_size())
     background = background.convert()
-    background.fill((255, 0, 0))
+    background.fill((185, 9, 11))
 
     # Display title screen
     font = pygame.font.Font(None, 36)
