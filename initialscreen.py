@@ -42,13 +42,27 @@ def main():
     pygame.display.flip()
 
     # Event loop
-    while 1:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                return
-
-        screen.blit(background, (0, 0))
-        pygame.display.flip()
-
+    run = True
+    title_screen = True
+    new_screen = False
+    while run:
+        while title_screen:
+            event = pygame.event.poll()
+            if event.type == pygame.QUIT:
+                title_screen = False
+		run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+		new_screen = True
+                title_screen = False 
+        while new_screen:
+            background.fill((185,9,11))
+	    screen.blit(background, (0, 0))
+            pygame.display.flip()
+            event = pygame.event.poll()
+            if event.type == pygame.QUIT:
+                new_screen = False
+                run = False
+            #screen.blit(background, (0, 0))
+    return
 
 if __name__ == '__main__': main()
