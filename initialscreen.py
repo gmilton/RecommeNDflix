@@ -16,8 +16,8 @@ def main():
     # Display title screen
     outline_font = pygame.font.Font(None, 52)
     outline = outline_font.render("RecommeNDflix", 1, (10, 10, 10))
-    font = pygame.font.Font(None, 52)
-    text = font.render("RecommeNDflix", 1, (255, 255, 255))
+    title_font = pygame.font.Font(None, 52)
+    title = title_font.render("RecommeNDflix", 1, (255, 255, 255))
     background.blit(outline, (165,99)) # 1 up, 1 left
     background.blit(outline, (166,99))
     background.blit(outline, (167,99))
@@ -42,7 +42,9 @@ def main():
     #background.blit(outline, (176,105))
     #background.blit(outline, (173,108))
     #background.blit(outline, (174,109))
-    background.blit(text, (167,100))
+    background.blit(title, (167,100))
+    start_font = pygame.font.Font(None, 52)
+    start = start_font.render("RecommeNDflix", 1, (255, 255, 255))
     #textpos = text.get_rect()
     #textpos.centerx = background.get_rect().centerx
     #textpos.centery = background.get_rect().centery
