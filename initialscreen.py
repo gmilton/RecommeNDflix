@@ -35,7 +35,7 @@ def main():
     background.blit(title, (text_horizontal,text_vertical))
     start_font = pygame.font.Font(None, 40)
     start = start_font.render("Start", 1, (200, 200, 200))
-    background.blit(start, (text_horizontal + 185, text_vertical + 150))
+    background.blit(start, (text_horizontal + 175, text_vertical + 150))
 
     # Blit everything to the screen
     screen.blit(background, (0, 0))
