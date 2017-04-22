@@ -7,34 +7,37 @@ import sys
 import json
 
 GENRE_LIST = {}
+genre_key = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+movie_titles = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
 url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US'
 response = requests.get(url)
 data = response.json()
 
-#for title in data[
-
+i = 0
 for genre in data['genres']:
-	genre_key = genre['id']
-	genre_name = genre['name']
-	GENRE_LIST[genre_key] = genre_name
+	genre_key[i] = genre['id']
+	i = i + 1
 
-for i in GENRE_LIST:
-	print GENRE_LIST[i]
-
-genre_search = raw_input('Enter a genre to search by: ')
-
-for j in GENRE_LIST:
-	if genre_search == GENRE_LIST[j]:
-		GENRE = j
 
 url1 = "https://api.themoviedb.org/3/genre/"
 url2 = "/movies?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US"
-URL = url1+str(GENRE)+url2
+GENRE_LIST = {k: [] for k in genre_key}
+for genre_id in genre_key:
+	URL = url1+str(genre_id)+url2
+	response2 = requests.get(URL)
+	alldata = response2.json()
+	j = 0
+	# stores all of the movies associated with a genre in a list
+	for movies in alldata['results']:
+		movie_titles[j] = movies['original_title'] 
+		# sets the movie list in the dictionary with its key value
+		GENRE_LIST[genre_id].append(movie_titles[j])
+		j = j + 1
 
-response2 = requests.get(URL)
-
-alldata = response2.json()
-
-for title in alldata['results']:
-        print title['title']
+for key in GENRE_LIST.keys():
+	value_list = GENRE_LIST[key]
+	print key
+	for a in xrange(len(value_list)):
+		print value_list[a]
+	print " "
