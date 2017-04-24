@@ -68,6 +68,16 @@ time_color = [netflix_red, netflix_red, netflix_red, netflix_red]
 genre_chosen = False
 time_chosen = False
 WEEKDAY=datetime.datetime.today().weekday()
+morning_ff_quotes = []
+morning_funny_quotes = []
+morning_singalong_quotes = []
+afternoon_educational_quotes = []
+afternoon_adventure_quotes = []
+afternoon_sport_quotes = []
+night_scary_quotes = []
+night_date_quotes = []
+night_world_quotes = []
+
 
 if WEEKDAY==0:
   DAY='Monday'
@@ -84,6 +94,16 @@ elif WEEKDAY==5:
 else:
   DAY='Sunday'
 
+TIMEODAY=time.strftime("%H") #gets the hour of the day
+
+HOUR = int(TIMEODAY)
+
+if HOUR >= 5 and HOUR < 12:
+    time_of_day = 'morning'
+elif HOUR >= 12 and HOUR < 17:
+    time_of_day = 'afternoon'
+else:
+    time_of_day = 'night'
 
 # Initialise screen
 pygame.init()
@@ -124,7 +144,29 @@ while run:
 	
 	# Message about day/time of day
     	day_font = pygame.font.SysFont(None, 30)	
-    	day_message = day_font.render("You made it to "+str(DAY)+", bruh, good for you.", 1, (255, 255, 255))
+    	day_message = day_font.render("You made it to "+str(DAY)+" "+time_of_day+", bruh, good for you.", 1, (255, 255, 255))
+        if (time_of_day == 'morning'):
+            # Probably set genre_id number in here
+            option1_string = 'Something family-friendly'
+            option1_quote = 'Just keep swimming (Finding Nemo, 2003)'
+            option2_string = "Something funny and light-hearted"
+	    option2_quote ="Gentleman, you can't fight in here! This is the War Room! (Dr. Strangelove, 1964)"
+            option3_string = 'Something to sing-along to'
+	    option3_quote = 'Tell me about it, stud. (Grease, 1978)'
+        if (time_of_day == 'afternoon'):
+            option1_string = 'Something educational'
+            option1_quote = 'Here at NASA we all pee the same color. (Hidden Figures, 2016)'
+            option2_string = 'Something adventurous'
+            option2_quote = '...I will look for you, I will find you, and I will kill you. (Taken, 2008)'
+            option3_string = 'Something sporty'
+            option3_quote = "There's no crying in baseball! (A League of Their Own, 1992)"
+        if (time_of_day == 'night'):
+            option1_string = 'Something scary'
+            option1_quote = 'A census taker one tried to test me. I ate his liver with some fava beans and a nice Chianti. (The Silence of the Lambs, 1991)'
+            option2_string = 'Something perfect for date night'
+            option2_quote = 'When you realize you want to spend the rest of your life with somebody, you want the rest of your life to start as soon as possible. (When Harry Met Sally, 1989)'
+            option3_string = 'Something out of this world'
+            option3_quote = "Toto, I've a feeling we're not in Kansas anymore. (The Wizard of Oz, 1939)"
 
 	# Question about what to watch
 	genre_font = pygame.font.SysFont(None, 30)
@@ -132,19 +174,23 @@ while run:
 
 	# ------- Genre Options ------------ 
         options_font = pygame.font.SysFont(None, 16)
+        quote_font = pygame.font.SysFont(None, 16, False, True)
 
 	# Names for each genre
-        option1 = options_font.render("Something hella", 1, (255, 255, 255))
-        option2 = options_font.render("Something not hella", 1, (255, 255, 255))
-        option3 = options_font.render("Surprise me!", 1, (255, 255, 255))
+        option1 = options_font.render(option1_string, 1, (255, 255, 255))
+        quote1 = quote_font.render(option1_quote, 1, (255, 255, 255))
+        option2 = options_font.render(option2_string, 1, (255, 255, 255))
+        quote2 = quote_font.render(option2_quote, 1, (255, 255, 255))
+        option3 = options_font.render(option3_string, 1, (255, 255, 255))
+        quote3 = quote_font.render(option3_quote, 1, (255, 255, 255))
   
 	# Checkboxes for each genre
         pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y, checkbox_size, checkbox_size), checkbox_thickness)
 	pygame.draw.rect(background, checkbox_color[0], (checkbox_x+2, checkbox_y+2, checkbox_size-4, checkbox_size-4), 0)    	
-	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+20, checkbox_size, checkbox_size), checkbox_thickness)    	
-	pygame.draw.rect(background, checkbox_color[1], (checkbox_x+2, checkbox_y+22, checkbox_size-4, checkbox_size-4), 0)    	
-	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+40, checkbox_size, checkbox_size), checkbox_thickness)    	
-	pygame.draw.rect(background, checkbox_color[2], (checkbox_x+2, checkbox_y+42, checkbox_size-4, checkbox_size-4), 0)    	
+	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+25, checkbox_size, checkbox_size), checkbox_thickness)    	
+	pygame.draw.rect(background, checkbox_color[1], (checkbox_x+2, checkbox_y+27, checkbox_size-4, checkbox_size-4), 0)    	
+	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+50, checkbox_size, checkbox_size), checkbox_thickness)    	
+	pygame.draw.rect(background, checkbox_color[2], (checkbox_x+2, checkbox_y+52, checkbox_size-4, checkbox_size-4), 0)    	
 
 	# Question about how much time to spend
         time_font = pygame.font.SysFont(None, 30)
@@ -176,8 +222,11 @@ while run:
 	background.blit(day_message, (10,10))
 	background.blit(genre, (10, 35))
 	background.blit(option1, (checkbox_x + 15, checkbox_y))
-	background.blit(option2, (checkbox_x + 15, checkbox_y + 20))
-	background.blit(option3, (checkbox_x + 15, checkbox_y + 40))
+        background.blit(quote1, (checkbox_x + 15, checkbox_y + 10))
+	background.blit(option2, (checkbox_x + 15, checkbox_y + 25))
+        background.blit(quote2, (checkbox_x + 15, checkbox_y + 35))
+	background.blit(option3, (checkbox_x + 15, checkbox_y + 50))
+        background.blit(quote3, (checkbox_x + 15, checkbox_y + 60))
 	background.blit(time, (10, 150))
         background.blit(range1, (checkbox_x+15, checkbox_y+120))
         background.blit(range2, (checkbox_x + 15, checkbox_y+140))
@@ -197,11 +246,11 @@ while run:
 		    old_color = checkbox_color[0]
                     checkbox_color[0] = toggle_colors(checkbox_color, 0)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[0], genre_chosen)
-                if y > checkbox_y+20 and y < checkbox_y+checkbox_size+20:
+                if y > checkbox_y+25 and y < checkbox_y+checkbox_size+25:
 		    old_color = checkbox_color[1]
                     checkbox_color[1] = toggle_colors(checkbox_color, 1)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[1], genre_chosen)
-                if y > checkbox_y+40 and y < checkbox_y+checkbox_size+40:
+                if y > checkbox_y+50 and y < checkbox_y+checkbox_size+50:
 		    old_color = checkbox_color[2]
                     checkbox_color[2] = toggle_colors(checkbox_color, 2)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[2], genre_chosen)
