@@ -41,6 +41,15 @@ def toggle_colors(color_list, index):
         color = netflix_red
     return color
 
+def toggle_chosen(old, new, chosen):
+
+    if old == netflix_red and new == light_paprika:
+        return True
+    elif old == light_paprika and new == netflix_red:
+        return False
+    else:
+        return chosen
+
 # Variables
 text_vertical = 100
 text_horizontal = 85
@@ -56,6 +65,8 @@ netflix_red = (185, 9, 11)
 light_paprika = (255, 153, 153)
 checkbox_color = [netflix_red, netflix_red, netflix_red]
 time_color = [netflix_red, netflix_red, netflix_red, netflix_red]
+genre_chosen = False
+time_chosen = False
 WEEKDAY=datetime.datetime.today().weekday()
 
 if WEEKDAY==0:
@@ -183,25 +194,42 @@ while run:
 	    print x, y, checkbox_x, checkbox_y, checkbox_size
             if x > checkbox_x and x < checkbox_x+checkbox_size:	
                 if y > checkbox_y and y < checkbox_y+checkbox_size:
+		    old_color = checkbox_color[0]
                     checkbox_color[0] = toggle_colors(checkbox_color, 0)
-		    print checkbox_color[0]	
+		    genre_chosen = toggle_chosen(old_color, checkbox_color[0], genre_chosen)
                 if y > checkbox_y+20 and y < checkbox_y+checkbox_size+20:
+		    old_color = checkbox_color[1]
                     checkbox_color[1] = toggle_colors(checkbox_color, 1)
+		    genre_chosen = toggle_chosen(old_color, checkbox_color[1], genre_chosen)
                 if y > checkbox_y+40 and y < checkbox_y+checkbox_size+40:
+		    old_color = checkbox_color[2]
                     checkbox_color[2] = toggle_colors(checkbox_color, 2)
-
+		    genre_chosen = toggle_chosen(old_color, checkbox_color[2], genre_chosen)
                 if y > checkbox_y+120 and y < checkbox_y+checkbox_size+120:
+		    old_color = time_color[0]
                     time_color[0] = toggle_colors(time_color, 0)	
+		    time_chosen = toggle_chosen(old_color, time_color[0], time_chosen)
                 if y > checkbox_y+140 and y < checkbox_y+checkbox_size+140:
+		    old_color = time_color[1]
                     time_color[1] = toggle_colors(time_color, 1)
+		    time_chosen = toggle_chosen(old_color, time_color[1], time_chosen)
                 if y > checkbox_y+160 and y < checkbox_y+checkbox_size+160:
+		    old_color = time_color[2]
                     time_color[2] = toggle_colors(time_color, 2)
+		    time_chosen = toggle_chosen(old_color, time_color[2], time_chosen)
                 if y > checkbox_y+180 and y < checkbox_y+checkbox_size+180:
+		    old_color = time_color[3]
                     time_color[3] = toggle_colors(time_color, 3)
+		    time_chosen = toggle_chosen(old_color, time_color[3], time_chosen)
+                print "genre_chose: ", genre_chosen
+                print "time_chosen: ", time_chosen
             if x > 200 and x < 360:
                 if y > 350 and y < 375:
-                    new_screen = True
-                    menu_screen = False 
+		    print "genre_chosen: ", genre_chosen
+                    print "time_chosen: ", time_chosen
+		    if genre_chosen and time_chosen:
+                        new_screen = True
+                        menu_screen = False 
         if event.type == pygame.QUIT:
             menu_screen = False
             run = False
