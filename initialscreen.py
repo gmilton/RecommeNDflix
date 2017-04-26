@@ -129,8 +129,8 @@ background.fill(netflix_red)
 
 # Display title screen
 titlef(text_horizontal, text_vertical) 
-start_font = pygame.font.Font('scriptfont.ttf', 40)
-start = start_font.render("Start", 1, (200, 200, 200))
+start_font = pygame.font.Font('bannertext.ttf', 40)
+start = start_font.render("(Start)", 1, (200, 200, 200))
 background.blit(start, (text_horizontal + 170, text_vertical + 150))
 
 # Blit everything to the screen
