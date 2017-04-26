@@ -1,4 +1,5 @@
 #!/usr/bin/env python2.7
+
 import pygame
 import datetime
 import time
@@ -79,6 +80,7 @@ night_date_quotes = []
 night_world_quotes = []
 
 
+#---assign each weekday string given weekday integer value---
 if WEEKDAY==0:
   DAY='Monday'
 elif WEEKDAY==1:
@@ -98,6 +100,7 @@ TIMEODAY=time.strftime("%H") #gets the hour of the day
 
 HOUR = int(TIMEODAY)
 
+#---display the correct message based on the current hour---
 if HOUR >= 5 and HOUR < 12:
     time_of_day = 'morning'
 elif HOUR >= 12 and HOUR < 17:
@@ -105,7 +108,7 @@ elif HOUR >= 12 and HOUR < 17:
 else:
     time_of_day = 'night'
 
-# Initialise screen
+# Initialize screen
 pygame.init()
 screen = pygame.display.set_mode((600, 400))
 pygame.display.set_caption('RecommeNDflix')
@@ -194,7 +197,7 @@ while run:
 
 	# Question about how much time to spend
         time_font = pygame.font.SysFont(None, 30)
-        time = time_font.render("How much time would you like to spend watching movies?", 1, (255, 255, 255))
+        time = time_font.render("How much time do you have?", 1, (255, 255, 255))
 
 	# ---------- Time Options --------------
         times_font = pygame.font.SysFont(None, 16)
