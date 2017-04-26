@@ -87,7 +87,9 @@ night_world_quotes = []
 
 genre_lists = [[[10751], [16, 35], [10402]], [[36, 99], [10752, 37, 12, 80], [28, 10770]], [[27, 53], [10749, 18], [14, 878, 9648]]]
 
+time_final = [0,0]
 final_dict = {}
+chosen_movies = []
 
 #print genre_lists[0][0][0];
 
@@ -283,25 +285,29 @@ while run:
                     time_color[0] = toggle_colors(time_color, 0)	
 		    time_chosen = toggle_chosen(old_color, time_color[0], time_chosen)
 		    if time_chosen:
-                        time_final = 90;
+                        time_final[0] = 0
+                        time_final[1] = 90
                 if y > checkbox_y+140 and y < checkbox_y+checkbox_size+140:
 		    old_color = time_color[1]
                     time_color[1] = toggle_colors(time_color, 1)
 		    time_chosen = toggle_chosen(old_color, time_color[1], time_chosen)
 		    if time_chosen:
-                        time_final = 150;
+                        time_final[0] = 90
+                        time_final[1] = 150
                 if y > checkbox_y+160 and y < checkbox_y+checkbox_size+160:
 		    old_color = time_color[2]
                     time_color[2] = toggle_colors(time_color, 2)
 		    time_chosen = toggle_chosen(old_color, time_color[2], time_chosen)
 		    if time_chosen:
-                        time_final = 180;
+                        time_final[0] = 150
+                        time_final[1] = 180
                 if y > checkbox_y+180 and y < checkbox_y+checkbox_size+180:
 		    old_color = time_color[3]
                     time_color[3] = toggle_colors(time_color, 3)
 		    time_chosen = toggle_chosen(old_color, time_color[3], time_chosen)
 		    if time_chosen:
-                        time_final = -1;
+                        time_final[0] = 0
+                        time_final[1] = -1;
 #                print "genre_chose: ", genre_chosen
 #                print "time_chosen: ", time_chosen
             if x > 220 and x < 360:
@@ -369,8 +375,8 @@ while run:
                     runtime = runtime[:-4]
                     try:
                         runtime_num = int(runtime)
-                        if time_final != -1:
-                            if runtime_num <= time_final:
+                        if time_final[1] != -1:
+                            if runtime_num <= time_final[1]:
                                 final_dict[mt] = runtime_num
                         else:
                             final_dict[mt] = runtime_num
@@ -381,19 +387,39 @@ while run:
             print key, final_dict[key]
 	keys = final_dict.keys()
         random.shuffle(keys)
-        count = 0
-        pick_time = 0
-        time_tally = final_dict[keys[count]]
-        print time_tally, type(time_tally), time_final, type(time_final)
-        while time_tally < time_final:
+        main_count = 0
+        while True:
+            count = main_count
+            pick_time = 0
+            time_tally = final_dict[keys[count]]
+            chosen_movies.append(keys[count])
             count = count + 1
-            pick_time = final_dict[keys[count]]
-            print final_dict[keys[count]], time_tally
-            time_tally = time_tally + pick_time
-        if time_tally > time_final:
-            time_tally = time_tally - pick_time
-        #print time_tally
-        #for item in 
+            print time_tally, type(time_tally), time_final[1], type(time_final[1])
+            if time_final[1] != -1:
+                while time_tally < time_final[1] and count < len(final_dict):
+                    pick_time = final_dict[keys[count]]
+                    #print final_dict[keys[count]], time_tally
+                    #time_tally = time_tally + pick_time
+                    if time_tally + pick_time <= time_final[1]:
+                        time_tally = time_tally + pick_time
+                        chosen_movies.append(keys[count])
+                    count = count + 1
+            else:
+                while count < len(final_dict) and count < 7:
+                    pick_time = final_dict[keys[count]]
+                    time_tally = time_tally + pick_time
+                    chosen_movies.append(keys[count])
+                    count = count + 1 
+            if time_tally > time_final[0]:
+                break
+            else:
+                main_count = main_count + 1
+                del chosen_movies[:]
+         
+        print time_tally
+        for item in chosen_movies:
+            print item, final_dict[item]
+        print 'end'
 
     while new_screen:
       #  for item in genre_final:
