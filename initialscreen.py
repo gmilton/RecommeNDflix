@@ -129,9 +129,9 @@ background.fill(netflix_red)
 
 # Display title screen
 titlef(text_horizontal, text_vertical) 
-start_font = pygame.font.Font('bannertext.ttf', 40)
+start_font = pygame.font.Font('scriptfont.ttf', 40)
 start = start_font.render("(Start)", 1, (200, 200, 200))
-background.blit(start, (text_horizontal + 170, text_vertical + 150))
+background.blit(start, (text_horizontal + 160, text_vertical + 150))
 
 # Blit everything to the screen
 screen.blit(background, (0, 0))
@@ -146,8 +146,9 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-            if x > 250 and x < 350:
-                if y > 250 and y < 275:
+	    print x, y
+            if x > 250 and x < 355:
+                if y > 250 and y < 310:
                     menu_screen = True
                     title_screen = False 
     while menu_screen:
@@ -205,7 +206,7 @@ while run:
 	pygame.draw.rect(background, checkbox_color[2], (checkbox_x+2, checkbox_y+52, checkbox_size-4, checkbox_size-4), 0)    	
 
 	# Question about how much time to spend
-        time_font = pygame.font.SysFont(None, 30)
+        time_font = pygame.font.Font("basicsansserif.ttf", 30)
         time = time_font.render("How much time do you have?", 1, (255, 255, 255))
 
 	# ---------- Time Options --------------
@@ -227,8 +228,8 @@ while run:
 	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+180, checkbox_size, checkbox_size), checkbox_thickness)    	
 	pygame.draw.rect(background, time_color[3], (checkbox_x+2, checkbox_y+182, checkbox_size-4, checkbox_size-4), 0)    	
 
-	continue_font = pygame.font.Font(None, 40)
-	continue_button = continue_font.render("CONTINUE", 1, (205, 205, 205))
+	continue_font = pygame.font.Font("scriptfont.ttf", 40)
+	continue_button = continue_font.render("Continue", 1, (205, 205, 205))
 
 	# Add everything to background
 	background.blit(day_message, (10,10))
@@ -244,7 +245,7 @@ while run:
         background.blit(range2, (checkbox_x + 15, checkbox_y+140))
         background.blit(range3, (checkbox_x + 15, checkbox_y + 160))
         background.blit(range4, (checkbox_x + 15, checkbox_y + 180))
-	background.blit(continue_button, (text_horizontal + 120, text_vertical + 250))
+	background.blit(continue_button, (text_horizontal + 140, text_vertical + 200))
 
 	# Add background to screen
 	screen.blit(background, (0, 0))
@@ -252,7 +253,7 @@ while run:
         event = pygame.event.poll()
 	if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-#	    print x, y, checkbox_x, checkbox_y, checkbox_size
+	    print x, y, checkbox_x, checkbox_y, checkbox_size
             if x > checkbox_x and x < checkbox_x+checkbox_size:	
                 if y > checkbox_y and y < checkbox_y+checkbox_size:
 		    old_color = checkbox_color[0]
@@ -298,8 +299,8 @@ while run:
                         time_final = -1;
 #                print "genre_chose: ", genre_chosen
 #                print "time_chosen: ", time_chosen
-            if x > 200 and x < 360:
-                if y > 350 and y < 375:
+            if x > 220 and x < 360:
+                if y > 300 and y < 360:
 #		    print "genre_chosen: ", genre_chosen
 #                    print "time_chosen: ", time_chosen
 		    if genre_chosen and time_chosen:
