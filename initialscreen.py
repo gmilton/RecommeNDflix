@@ -252,7 +252,7 @@ while run:
         event = pygame.event.poll()
 	if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-	    print x, y, checkbox_x, checkbox_y, checkbox_size
+#	    print x, y, checkbox_x, checkbox_y, checkbox_size
             if x > checkbox_x and x < checkbox_x+checkbox_size:	
                 if y > checkbox_y and y < checkbox_y+checkbox_size:
 		    old_color = checkbox_color[0]
@@ -296,77 +296,80 @@ while run:
 		    time_chosen = toggle_chosen(old_color, time_color[3], time_chosen)
 		    if time_chosen:
                         time_final = -1;
-                print "genre_chose: ", genre_chosen
-                print "time_chosen: ", time_chosen
+#                print "genre_chose: ", genre_chosen
+#                print "time_chosen: ", time_chosen
             if x > 200 and x < 360:
                 if y > 350 and y < 375:
-		    print "genre_chosen: ", genre_chosen
-                    print "time_chosen: ", time_chosen
+#		    print "genre_chosen: ", genre_chosen
+#                    print "time_chosen: ", time_chosen
 		    if genre_chosen and time_chosen:
                         new_screen = True
                         menu_screen = False 
         if event.type == pygame.QUIT:
             menu_screen = False
             run = False
+    if new_screen:   
+        GENRE_LIST = {}
+        genre_key = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        movie_titles = ['','','','','','','','','','','','','','','','','','','','']
    
-    GENRE_LIST = {}
-    genre_key = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    movie_titles = ['','','','','','','','','','','','','','','','','','','','']
-   
-    url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US'
-    response = requests.get(url)
-    data = response.json()
+        url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US'
+        response = requests.get(url)
+        data = response.json()
 
-    i = 0
-    for genre in data['genres']:
-        genre_key[i] = genre['id']
-        i = i + 1
-#        print genre['id']
+        i = 0
+        for genre in data['genres']:
+            genre_key[i] = genre['id']
+            i = i + 1
+            #        print genre['id']
 
-    url1 = "https://api.themoviedb.org/3/genre/"
-    url2 = "/movies?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US"
-    GENRE_LIST = {k: [] for k in genre_key}
-    for genre_id in genre_key:
-        URL = url1+str(genre_id)+url2
-        response2 = requests.get(URL)
-        alldata = response2.json()
- #       print alldata
-        j = 0
-        force_stop = False
-        # stores all of the movies associated with a genre in a list
-        if not force_stop:
-            for movies in alldata['results']:
-                movie_titles[j] = movies['original_title']
-        #        print movies['original_title']
-                # sets the movie list in the dictionary with its key value
-                GENRE_LIST[genre_id].append(movie_titles[j])
-                j = j + 1
-        #        print j
-                if j == 20:
-                    force_stop = True
-                    break
+        url1 = "https://api.themoviedb.org/3/genre/"
+        url2 = "/movies?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US"
+        GENRE_LIST = {k: [] for k in genre_key}
+        for genre_id in genre_key:
+            URL = url1+str(genre_id)+url2
+            response2 = requests.get(URL)
+            alldata = response2.json()
+            #       print alldata
+            j = 0
+            force_stop = False
+            # stores all of the movies associated with a genre in a list
+            if not force_stop:
+                for movies in alldata['results']:
+                    movie_titles[j] = movies['original_title']
+                    #        print movies['original_title']
+                    # sets the movie list in the dictionary with its key value
+                    GENRE_LIST[genre_id].append(movie_titles[j])
+                    j = j + 1
+                    #        print j
+                    if j == 20:
+                        force_stop = True
+                        break
 
 # --------------- Up to here has been making dict ---------------
 
-    omdburl = 'http://www.omdbapi.com/?'
+        omdburl = 'http://www.omdbapi.com/?'
 
-    for key in genre_final:
-        value_list = GENRE_LIST[key]
-    #    print key
-        for a in xrange(len(value_list)):
-            mt = value_list[a]
-            omdbresponse=requests.get(omdburl+'t='+mt)
-            omdbdata=omdbresponse.json()
-            if omdbdata['Response'] == 'True':
-                runtime = omdbdata['Runtime']
-                #print runtime
-                runtime = runtime[:-4]
-                try:
-                    runtime_num = int(runtime)
-                    if (runtime_num <= time_final):
-                        print mt, runtime_num
-                except ValueError:
-                    pass
+        for key in genre_final:
+            value_list = GENRE_LIST[key]
+            #    print key
+            for a in xrange(len(value_list)):
+                mt = value_list[a]
+                omdbresponse=requests.get(omdburl+'t='+mt)
+                omdbdata=omdbresponse.json()
+                if omdbdata['Response'] == 'True':
+                    runtime = omdbdata['Runtime']
+                    #print runtime
+                    runtime = runtime[:-4]
+                    try:
+                        runtime_num = int(runtime)
+                        if time_final != -1:
+                            if runtime_num <= time_final:
+                                print mt, runtime_num
+                        else:
+                            print mt, runtime_num
+                    except ValueError:
+                        pass
 
 
 
