@@ -57,7 +57,7 @@ text_horizontal = 85
 run = True
 title_screen = True
 menu_screen = False
-new_screen = False
+options_screen = False
 checkbox_x = 20
 checkbox_y = 65
 checkbox_size = 10
@@ -78,7 +78,7 @@ afternoon_sport_quotes = []
 night_scary_quotes = []
 night_date_quotes = []
 night_world_quotes = []
-
+genre_num = 10751
 
 #---assign each weekday string given weekday integer value---
 if WEEKDAY==0:
@@ -100,7 +100,7 @@ TIMEODAY=time.strftime("%H") #gets the hour of the day
 
 HOUR = int(TIMEODAY)
 
-#---display the correct message based on the current hour---
+# Display the correct message based on the current hour
 if HOUR >= 5 and HOUR < 12:
     time_of_day = 'morning'
 elif HOUR >= 12 and HOUR < 17:
@@ -150,21 +150,21 @@ while run:
     	day_message = day_font.render("You made it to "+str(DAY)+" "+time_of_day+", bruh, good for you.", 1, (255, 255, 255))
         if (time_of_day == 'morning'):
             # Probably set genre_id number in here
-            option1_string = 'Something family-friendly'
+            option1_string = 'Something PG for the kids'
             option1_quote = 'Just keep swimming (Finding Nemo, 2003)'
-            option2_string = "Something funny and light-hearted"
+            option2_string = "Something to start the day on a light-hearted note"
 	    option2_quote ="Gentleman, you can't fight in here! This is the War Room! (Dr. Strangelove, 1964)"
-            option3_string = 'Something to sing-along to'
+            option3_string = 'Something perfect to sing along to'
 	    option3_quote = 'Tell me about it, stud. (Grease, 1978)'
         if (time_of_day == 'afternoon'):
-            option1_string = 'Something educational'
+            option1_string = 'Something more educational than the soap operas on cable'
             option1_quote = 'Here at NASA we all pee the same color. (Hidden Figures, 2016)'
-            option2_string = 'Something adventurous'
+            option2_string = 'Something adventurous for this average afternoon'
             option2_quote = '...I will look for you, I will find you, and I will kill you. (Taken, 2008)'
             option3_string = 'Something sporty'
             option3_quote = "There's no crying in baseball! (A League of Their Own, 1992)"
         if (time_of_day == 'night'):
-            option1_string = 'Something scary'
+            option1_string = 'Something terrifying!'
             option1_quote = 'A census taker one tried to test me. I ate his liver with some fava beans and a nice Chianti. (The Silence of the Lambs, 1991)'
             option2_string = 'Something perfect for date night'
             option2_quote = 'When you realize you want to spend the rest of your life with somebody, you want the rest of your life to start as soon as possible. (When Harry Met Sally, 1989)'
@@ -249,6 +249,9 @@ while run:
 		    old_color = checkbox_color[0]
                     checkbox_color[0] = toggle_colors(checkbox_color, 0)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[0], genre_chosen)
+                    
+                    if time_of_day == 'night':
+                        genre_num == 35
                 if y > checkbox_y+25 and y < checkbox_y+checkbox_size+25:
 		    old_color = checkbox_color[1]
                     checkbox_color[1] = toggle_colors(checkbox_color, 1)
@@ -280,18 +283,32 @@ while run:
 		    print "genre_chosen: ", genre_chosen
                     print "time_chosen: ", time_chosen
 		    if genre_chosen and time_chosen:
-                        new_screen = True
+                        options_screen = True
                         menu_screen = False 
         if event.type == pygame.QUIT:
             menu_screen = False
             run = False
-    while new_screen:
-        background.fill((185,9,11))
-        screen.blit(background, (0, 0))
-        pygame.display.flip()
+    while options_screen:
+        background.fill((0,250,153))
+       
         event = pygame.event.poll()
         if event.type == pygame.QUIT:
-            new_screen = False
+            options_screen = False
             run = False
 
+	#if genre_num == 35:
+        theoptions_font = pygame.font.SysFont(None, 30)
+        if genre_num == 35:
+            theoptions = theoptions_font.render("its a comedy yo", 1, (255,255,255))
+	else:
+            theoptions = theoptions_font.render("def not a comedy", 1, (255, 255, 255))
+            
+	
+
+	background.blit(theoptions, (text_horizontal + 120, text_horizontal + 250))
+
+	screen.blit(background, (0,0))
+	pygame.display.flip()
+	
+# vim: set sts=4 sw=4 ts=8 expandtab ft=cpp:
 #if __name__ == '__main__': main()
