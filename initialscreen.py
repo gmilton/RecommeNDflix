@@ -7,6 +7,7 @@ import requests
 import sys
 import os
 import json
+import random
 from pygame.locals import *
 
 def titlef(horizontal_place, vertical_place):
@@ -85,6 +86,8 @@ night_date_quotes = []
 night_world_quotes = []
 
 genre_lists = [[[10751], [16, 35], [10402]], [[36, 99], [10752, 37, 12, 80], [28, 10770]], [[27, 53], [10749, 18], [14, 878, 9648]]]
+
+final_dict = {}
 
 #print genre_lists[0][0][0];
 
@@ -368,13 +371,29 @@ while run:
                         runtime_num = int(runtime)
                         if time_final != -1:
                             if runtime_num <= time_final:
-                                print mt, runtime_num
+                                final_dict[mt] = runtime_num
                         else:
-                            print mt, runtime_num
+                            final_dict[mt] = runtime_num
                     except ValueError:
                         pass
 
-
+        for key in final_dict:
+            print key, final_dict[key]
+	keys = final_dict.keys()
+        random.shuffle(keys)
+        count = 0
+        pick_time = 0
+        time_tally = final_dict[keys[count]]
+        print time_tally, type(time_tally), time_final, type(time_final)
+        while time_tally < time_final:
+            count = count + 1
+            pick_time = final_dict[keys[count]]
+            print final_dict[keys[count]], time_tally
+            time_tally = time_tally + pick_time
+        if time_tally > time_final:
+            time_tally = time_tally - pick_time
+        #print time_tally
+        #for item in 
 
     while new_screen:
       #  for item in genre_final:
