@@ -6,6 +6,7 @@ import time
 import requests
 import sys
 import os
+import json
 from pygame.locals import *
 
 def titlef(horizontal_place, vertical_place):
@@ -55,6 +56,7 @@ def toggle_chosen(old, new, chosen):
         return chosen
 
 # Variables
+#def main:
 text_vertical = 100
 text_horizontal = 85
 run = True
