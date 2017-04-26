@@ -153,7 +153,7 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-	    print x, y
+#	    print x, y
             if x > 250 and x < 355:
                 if y > 250 and y < 310:
                     menu_screen = True
@@ -260,7 +260,7 @@ while run:
         event = pygame.event.poll()
 	if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-	    print x, y, checkbox_x, checkbox_y, checkbox_size
+	   # print x, y, checkbox_x, checkbox_y, checkbox_size
             if x > checkbox_x and x < checkbox_x+checkbox_size:	
                 if y > checkbox_y and y < checkbox_y+checkbox_size:
 		    old_color = checkbox_color[0]
@@ -383,8 +383,8 @@ while run:
                     except ValueError:
                         pass
 
-        for key in final_dict:
-            print key, final_dict[key]
+        #for key in final_dict:
+        #    print key, final_dict[key]
 	keys = final_dict.keys()
         random.shuffle(keys)
         main_count = 0
@@ -394,7 +394,7 @@ while run:
             time_tally = final_dict[keys[count]]
             chosen_movies.append(keys[count])
             count = count + 1
-            print time_tally, type(time_tally), time_final[1], type(time_final[1])
+        #    print time_tally, type(time_tally), time_final[1], type(time_final[1])
             if time_final[1] != -1:
                 while time_tally < time_final[1] and count < len(final_dict):
                     pick_time = final_dict[keys[count]]
@@ -416,16 +416,24 @@ while run:
                 main_count = main_count + 1
                 del chosen_movies[:]
          
-        print time_tally
-        for item in chosen_movies:
-            print item, final_dict[item]
-        print 'end'
+        # print time_tally
+        #for item in chosen_movies:
+        #    print item, final_dict[item]
+        #print 'end'
 
     while new_screen:
-      #  for item in genre_final:
-      #      print "genre: "+str(item)
-      #  print "time: "+str(time_final)
         background.fill((185,9,11))
+        xpos = 80
+        ypos = 100
+        titlef(80, 60)
+        for item in chosen_movies:      
+            results_font = pygame.font.Font("basicsansserif.ttf", 20)
+            results = results_font.render(item, 1, (255, 255, 255))
+            background.blit(results, (xpos, ypos))
+            ypos = ypos + 30
+        tally_font = pygame.font.Font("funfont1.ttf", 30)
+        tally = tally_font.render("Total time: "+str(time_tally)+" minutes", 1, (0, 0, 0))
+        background.blit(tally, (80, ypos))
         screen.blit(background, (0, 0))
         pygame.display.flip()
         event = pygame.event.poll()
