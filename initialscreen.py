@@ -10,12 +10,16 @@ import json
 import random
 from pygame.locals import *
 
+# ---------------- FUNCTIONS ------------------
+
+# Function to draw title
 def titlef(horizontal_place, vertical_place):
     title_font = pygame.font.SysFont(None, 52)
     title = title_font.render("R E C O M M E N D F L I X", 1, (255, 255, 255))
     outlinef(horizontal_place, vertical_place)
     background.blit(title, (horizontal_place,vertical_place))
 
+# Function to give title outline
 def outlinef(text_horizontal, text_vertical):
     outline_font = pygame.font.Font(None, 52)
     outline = outline_font.render("R E C O M M E N D F L I X", 1, (10, 10, 10))
@@ -32,23 +36,22 @@ def outlinef(text_horizontal, text_vertical):
     background.blit(outline, (text_horizontal+3,text_vertical+3))
     background.blit(outline, (text_horizontal+4,text_vertical+4))
 
+# Switches color of checkbox when clicked
 def toggle_colors(color_list, index):
-
     i = 0
     for item in color_list:
         if i != index:
             if item == light_paprika:
                 return color_list[index]
         i = i + 1
-
     if color_list[index] == netflix_red:
         color = light_paprika
     elif color_list[index] == light_paprika:
         color = netflix_red
     return color
 
+# Returns true if checkbox clicked
 def toggle_chosen(old, new, chosen):
-
     if old == netflix_red and new == light_paprika:
         return True
     elif old == light_paprika and new == netflix_red:
@@ -56,44 +59,45 @@ def toggle_chosen(old, new, chosen):
     else:
         return chosen
 
-# Variables
+# ---------- VARIABLES -----------------
 #def main:
+
+# Integers
 text_vertical = 100
 text_horizontal = 85
+checkbox_x = 20
+checkbox_y = 70
+checkbox_size = 10
+checkbox_thickness = 2
+
+# Booleans
 run = True
 title_screen = True
 menu_screen = False
-new_screen = False
-checkbox_x = 20
-checkbox_y = 65
-checkbox_size = 10
-checkbox_thickness = 2
-netflix_red = (185, 9, 11)
-light_paprika = (255, 153, 153)
-checkbox_color = [netflix_red, netflix_red, netflix_red]
-time_color = [netflix_red, netflix_red, netflix_red, netflix_red]
+results_screen = False
 genre_chosen = False
 time_chosen = False
-WEEKDAY=datetime.datetime.today().weekday()
-morning_ff_quotes = []
-morning_funny_quotes = []
-morning_singalong_quotes = []
-afternoon_educational_quotes = []
-afternoon_adventure_quotes = []
-afternoon_sport_quotes = []
-night_scary_quotes = []
-night_date_quotes = []
-night_world_quotes = []
 
+# Colors
+netflix_red = (185, 9, 11)
+light_paprika = (255, 153, 153)
+
+# Lists
+checkbox_color = [netflix_red, netflix_red, netflix_red]
+time_color = [netflix_red, netflix_red, netflix_red, netflix_red]
 genre_lists = [[[10751], [16, 35], [10402]], [[36, 99], [10752, 37, 12, 80], [28, 10770]], [[27, 53], [10749, 18], [14, 878, 9648]]]
-
 time_final = [0,0]
-final_dict = {}
 chosen_movies = []
 
-#print genre_lists[0][0][0];
+# Datetime info
+WEEKDAY=datetime.datetime.today().weekday()
 
-#---assign each weekday string given weekday integer value---
+# Dictionaries
+final_dict = {}
+
+# ------------- WEEKDAY INFORMATION -------------------
+
+# Assign each weekday string given weekday integer value 
 if WEEKDAY==0:
   DAY='Monday'
 elif WEEKDAY==1:
@@ -109,11 +113,11 @@ elif WEEKDAY==5:
 else:
   DAY='Sunday'
 
-TIMEODAY=time.strftime("%H") #gets the hour of the day
-
+# Return hour of day as int
+TIMEODAY=time.strftime("%H")
 HOUR = int(TIMEODAY)
 
-#---display the correct message based on the current hour---
+# Set time of day and index to use for lists 
 if HOUR >= 5 and HOUR < 12:
     time_of_day = 'morning'
     time_index = 0
@@ -124,12 +128,14 @@ else:
     time_of_day = 'night'
     time_index = 2
 
+# ---------------- SCREEN --------------------
+
 # Initialize screen
 pygame.init()
 screen = pygame.display.set_mode((600, 400))
 pygame.display.set_caption('RecommeNDflix')
 
-#  background
+# Background
 background = pygame.Surface(screen.get_size())
 background = background.convert()
 background.fill(netflix_red)
@@ -144,8 +150,12 @@ background.blit(start, (text_horizontal + 160, text_vertical + 150))
 screen.blit(background, (0, 0))
 pygame.display.flip()
 
+# ----------------- PROGRAM -------------------------
+
 # Event loop
+# Runs until quit has been clicked
 while run:
+    # ----- Title Screen ----
     while title_screen:
         event = pygame.event.poll()
         if event.type == pygame.QUIT:
@@ -153,20 +163,21 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-#	    print x, y
             if x > 250 and x < 355:
                 if y > 250 and y < 310:
                     menu_screen = True
                     title_screen = False 
+    # ---- User Interactive/Menu Screen ----
     while menu_screen:
 	# Background color
         background.fill((185,9,11))
 	
 	# Message about day/time of day
-    	day_font = pygame.font.Font('basicsansserif.ttf', 25)	
+    	day_font = pygame.font.Font('basicsansserif.ttf', 30)	
     	day_message = day_font.render("You made it to "+str(DAY)+" "+time_of_day+"! Good for you!", 1, (255, 255, 255))
+
+        # Strings to display by genre checkboxes
         if (time_of_day == 'morning'):
-            # Probably set genre_id number in here
             option1_string = 'Something family-friendly'
             option1_quote = 'Just keep swimming (Finding Nemo, 2003)'
             option2_string = "Something funny and light-hearted"
@@ -182,17 +193,17 @@ while run:
             option3_quote = "There's no crying in baseball! (A League of Their Own, 1992)"
         if (time_of_day == 'night'):
             option1_string = 'Something scary'
-            option1_quote = 'A census taker one tried to test me. I ate his liver with some fava beans and a nice Chianti. (The Silence of the Lambs, 1991)'
+            option1_quote = 'Whenever feasible, one should always try to eat the rude. (The Silence of the Lambs, 1991)'
             option2_string = 'Something perfect for date night'
-            option2_quote = 'When you realize you want to spend the rest of your life with somebody, you want the rest of your life to start as soon as possible. (When Harry Met Sally, 1989)'
+            option2_quote = "I'll have what she's having. (When Harry Met Sally, 1989)"
             option3_string = 'Something out of this world'
             option3_quote = "Toto, I've a feeling we're not in Kansas anymore. (The Wizard of Oz, 1939)"
 
-	# Question about what to watch
-	genre_font = pygame.font.Font('basicsansserif.ttf', 25)
+	# Question about Genre
+	genre_font = pygame.font.Font('basicsansserif.ttf', 30)
 	genre = genre_font.render("What do you feel like watching?", 1, (255, 255, 255))
 
-	# ------- Genre Options ------------ 
+	# --------- Genre Options ------------ 
         options_font = pygame.font.SysFont(None, 16)
         quote_font = pygame.font.SysFont(None, 16, False, True)
 
@@ -235,6 +246,7 @@ while run:
 	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+180, checkbox_size, checkbox_size), checkbox_thickness)    	
 	pygame.draw.rect(background, time_color[3], (checkbox_x+2, checkbox_y+182, checkbox_size-4, checkbox_size-4), 0)    	
 
+        # Continue Button
 	continue_font = pygame.font.Font("scriptfont.ttf", 40)
 	continue_button = continue_font.render("Continue", 1, (205, 205, 205))
 
@@ -258,28 +270,33 @@ while run:
 	screen.blit(background, (0, 0))
         pygame.display.flip()
         event = pygame.event.poll()
+
+        # Check for Events
 	if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-	   # print x, y, checkbox_x, checkbox_y, checkbox_size
             if x > checkbox_x and x < checkbox_x+checkbox_size:	
+                # First Genre Checkbox Checked
                 if y > checkbox_y and y < checkbox_y+checkbox_size:
 		    old_color = checkbox_color[0]
                     checkbox_color[0] = toggle_colors(checkbox_color, 0)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[0], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][0]
+                # Second Genre Checkbox Checked
                 if y > checkbox_y+25 and y < checkbox_y+checkbox_size+25:
 		    old_color = checkbox_color[1]
                     checkbox_color[1] = toggle_colors(checkbox_color, 1)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[1], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][1]
+                # Third Genre Checkbox Checked
                 if y > checkbox_y+50 and y < checkbox_y+checkbox_size+50:
 		    old_color = checkbox_color[2]
                     checkbox_color[2] = toggle_colors(checkbox_color, 2)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[2], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][2]
+                # First Time Checkbox Checked
                 if y > checkbox_y+120 and y < checkbox_y+checkbox_size+120:
 		    old_color = time_color[0]
                     time_color[0] = toggle_colors(time_color, 0)	
@@ -287,6 +304,7 @@ while run:
 		    if time_chosen:
                         time_final[0] = 0
                         time_final[1] = 90
+                # Second Time Checkbox Checked 
                 if y > checkbox_y+140 and y < checkbox_y+checkbox_size+140:
 		    old_color = time_color[1]
                     time_color[1] = toggle_colors(time_color, 1)
@@ -294,6 +312,7 @@ while run:
 		    if time_chosen:
                         time_final[0] = 90
                         time_final[1] = 150
+                # Third Time Checkbox Checked
                 if y > checkbox_y+160 and y < checkbox_y+checkbox_size+160:
 		    old_color = time_color[2]
                     time_color[2] = toggle_colors(time_color, 2)
@@ -301,6 +320,7 @@ while run:
 		    if time_chosen:
                         time_final[0] = 150
                         time_final[1] = 180
+                # Fourth Time Checkbox Checked
                 if y > checkbox_y+180 and y < checkbox_y+checkbox_size+180:
 		    old_color = time_color[3]
                     time_color[3] = toggle_colors(time_color, 3)
@@ -308,19 +328,21 @@ while run:
 		    if time_chosen:
                         time_final[0] = 0
                         time_final[1] = -1;
-#                print "genre_chose: ", genre_chosen
-#                print "time_chosen: ", time_chosen
+            # Continue Button Clicked
             if x > 220 and x < 360:
                 if y > 300 and y < 360:
-#		    print "genre_chosen: ", genre_chosen
-#                    print "time_chosen: ", time_chosen
 		    if genre_chosen and time_chosen:
-                        new_screen = True
+                        results_screen = True
                         menu_screen = False 
         if event.type == pygame.QUIT:
             menu_screen = False
             run = False
-    if new_screen:   
+
+    # --------- Get Movies From Dictionary Based On Genre And Time Range Chosen ------------
+    if results_screen: 
+
+        # ------------------------ DICTIONARY CREATION ---------------------------------
+  
         GENRE_LIST = {}
         genre_key = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         movie_titles = ['','','','','','','','','','','','','','','','','','','','']
@@ -333,8 +355,7 @@ while run:
         for genre in data['genres']:
             genre_key[i] = genre['id']
             i = i + 1
-            #        print genre['id']
-
+            
         url1 = "https://api.themoviedb.org/3/genre/"
         url2 = "/movies?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US"
         GENRE_LIST = {k: [] for k in genre_key}
@@ -342,36 +363,32 @@ while run:
             URL = url1+str(genre_id)+url2
             response2 = requests.get(URL)
             alldata = response2.json()
-            #       print alldata
             j = 0
             force_stop = False
-            # stores all of the movies associated with a genre in a list
+            # Stores all of the movies associated with a genre in a list
             if not force_stop:
                 for movies in alldata['results']:
                     movie_titles[j] = movies['original_title']
-                    #        print movies['original_title']
-                    # sets the movie list in the dictionary with its key value
+                    # Sets the value for each key
                     GENRE_LIST[genre_id].append(movie_titles[j])
                     j = j + 1
-                    #        print j
                     if j == 20:
                         force_stop = True
                         break
 
-# --------------- Up to here has been making dict ---------------
+        # --------------- END OF DICTIONARY CREATION ---------------
 
+        # Cross reference movies narrows down by genre with times
         omdburl = 'http://www.omdbapi.com/?'
 
         for key in genre_final:
             value_list = GENRE_LIST[key]
-            #    print key
             for a in xrange(len(value_list)):
                 mt = value_list[a]
                 omdbresponse=requests.get(omdburl+'t='+mt)
                 omdbdata=omdbresponse.json()
                 if omdbdata['Response'] == 'True':
                     runtime = omdbdata['Runtime']
-                    #print runtime
                     runtime = runtime[:-4]
                     try:
                         runtime_num = int(runtime)
@@ -383,10 +400,11 @@ while run:
                     except ValueError:
                         pass
 
-        #for key in final_dict:
-        #    print key, final_dict[key]
+        # Randomize list
 	keys = final_dict.keys()
         random.shuffle(keys)
+
+        # Choose movies to display and keep within time range
         main_count = 0
         while True:
             count = main_count
@@ -394,12 +412,10 @@ while run:
             time_tally = final_dict[keys[count]]
             chosen_movies.append(keys[count])
             count = count + 1
-        #    print time_tally, type(time_tally), time_final[1], type(time_final[1])
+            # Keep movies below maximum
             if time_final[1] != -1:
                 while time_tally < time_final[1] and count < len(final_dict):
                     pick_time = final_dict[keys[count]]
-                    #print final_dict[keys[count]], time_tally
-                    #time_tally = time_tally + pick_time
                     if time_tally + pick_time <= time_final[1]:
                         time_tally = time_tally + pick_time
                         chosen_movies.append(keys[count])
@@ -410,27 +426,31 @@ while run:
                     time_tally = time_tally + pick_time
                     chosen_movies.append(keys[count])
                     count = count + 1 
+            # Exit if above minimum time limit
             if time_tally > time_final[0]:
                 break
+            # Reset movies chosen otherwise and iterate to begin with next movie
             else:
                 main_count = main_count + 1
                 del chosen_movies[:]
          
-        # print time_tally
-        #for item in chosen_movies:
-        #    print item, final_dict[item]
-        #print 'end'
-
-    while new_screen:
+    # ---------- Results Screen ------------
+    while results_screen:
         background.fill((185,9,11))
         xpos = 80
         ypos = 100
+        
+        # Display title
         titlef(80, 60)
+        
+        # Display movie titles
         for item in chosen_movies:      
             results_font = pygame.font.Font("basicsansserif.ttf", 20)
             results = results_font.render(item, 1, (255, 255, 255))
             background.blit(results, (xpos, ypos))
             ypos = ypos + 30
+   
+        # Display total time
         tally_font = pygame.font.Font("funfont1.ttf", 30)
         tally = tally_font.render("Total time: "+str(time_tally)+" minutes", 1, (0, 0, 0))
         background.blit(tally, (80, ypos))
@@ -438,7 +458,7 @@ while run:
         pygame.display.flip()
         event = pygame.event.poll()
         if event.type == pygame.QUIT:
-            new_screen = False
+            results_screen = False
             run = False
 
 #if __name__ == '__main__': main()
