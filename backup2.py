@@ -5,7 +5,7 @@ import datetime
 import time
 import requests
 import sys
-import json
+import os
 from pygame.locals import *
 
 def titlef(horizontal_place, vertical_place):
@@ -310,7 +310,7 @@ while run:
             run = False
    
     GENRE_LIST = {}
-    genre_key = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    genre_key = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     movie_titles = ['','','','','','','','','','','','','','','','','','','','']
    
     url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US'
@@ -321,6 +321,7 @@ while run:
     for genre in data['genres']:
         genre_key[i] = genre['id']
         i = i + 1
+#        print genre['id']
 
     url1 = "https://api.themoviedb.org/3/genre/"
     url2 = "/movies?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US"
@@ -329,22 +330,44 @@ while run:
         URL = url1+str(genre_id)+url2
         response2 = requests.get(URL)
         alldata = response2.json()
+ #       print alldata
         j = 0
+        force_stop = False
         # stores all of the movies associated with a genre in a list
-        for movies in alldata['results']:
+        if not force_stop:
+            for movies in alldata['results']:
                 movie_titles[j] = movies['original_title']
+        #        print movies['original_title']
                 # sets the movie list in the dictionary with its key value
                 GENRE_LIST[genre_id].append(movie_titles[j])
                 j = j + 1
+        #        print j
+                if j == 20:
+                    force_stop = True
+                    break
 
 # --------------- Up to here has been making dict ---------------
 
-    for key in GENRE_LIST.keys():
+    omdburl = 'http://www.omdbapi.com/?'
+
+    for key in genre_final:
         value_list = GENRE_LIST[key]
-        print key
+    #    print key
         for a in xrange(len(value_list)):
-            print value_list[a]
-        print " "
+            mt = value_list[a]
+            omdbresponse=requests.get(omdburl+'t='+mt)
+            omdbdata=omdbresponse.json()
+            if omdbdata['Response'] == 'True':
+                runtime = omdbdata['Runtime']
+                #print runtime
+                runtime = runtime[:-4]
+                try:
+                    runtime_num = int(runtime)
+                    if (runtime_num <= time_final):
+                        print mt, runtime_num
+                except ValueError:
+                    pass
+
 
 
     while new_screen:
