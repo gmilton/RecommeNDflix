@@ -445,8 +445,8 @@ while run:
         
         # Display movie titles
         for item in chosen_movies:      
-            results_font = pygame.font.Font("basicsansserif.ttf", 20)
-            results = results_font.render(item, 1, (255, 255, 255))
+            results_font = pygame.font.Font("basicsansserif.ttf", 18)
+            results = results_font.render(item+" ("+str(final_dict[item])+" minutes)", 1, (255, 255, 255))
             background.blit(results, (xpos, ypos))
             ypos = ypos + 30
    
