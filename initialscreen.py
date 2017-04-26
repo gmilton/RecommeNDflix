@@ -129,8 +129,8 @@ background.fill(netflix_red)
 
 # Display title screen
 titlef(text_horizontal, text_vertical) 
-start_font = pygame.font.Font(None, 40)
-start = start_font.render("START", 1, (200, 200, 200))
+start_font = pygame.font.Font('scriptfont.ttf', 40)
+start = start_font.render("Start", 1, (200, 200, 200))
 background.blit(start, (text_horizontal + 170, text_vertical + 150))
 
 # Blit everything to the screen
@@ -155,8 +155,8 @@ while run:
         background.fill((185,9,11))
 	
 	# Message about day/time of day
-    	day_font = pygame.font.SysFont(None, 30)	
-    	day_message = day_font.render("You made it to "+str(DAY)+" "+time_of_day+", bruh, good for you.", 1, (255, 255, 255))
+    	day_font = pygame.font.Font('basicsansserif.ttf', 25)	
+    	day_message = day_font.render("You made it to "+str(DAY)+" "+time_of_day+"! Good for you!", 1, (255, 255, 255))
         if (time_of_day == 'morning'):
             # Probably set genre_id number in here
             option1_string = 'Something family-friendly'
@@ -181,7 +181,7 @@ while run:
             option3_quote = "Toto, I've a feeling we're not in Kansas anymore. (The Wizard of Oz, 1939)"
 
 	# Question about what to watch
-	genre_font = pygame.font.SysFont(None, 30)
+	genre_font = pygame.font.Font('basicsansserif.ttf', 25)
 	genre = genre_font.render("What do you feel like watching?", 1, (255, 255, 255))
 
 	# ------- Genre Options ------------ 
