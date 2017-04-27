@@ -74,6 +74,7 @@ checkbox_x = 20
 checkbox_y = 70
 checkbox_size = 10
 checkbox_thickness = 2
+run_count = 0
 
 # Booleans
 run = True
@@ -82,6 +83,7 @@ menu_screen = False
 results_screen = False
 genre_chosen = False
 time_chosen = False
+easter_egg = False
 
 # Colors
 netflix_red = (185, 9, 11)
@@ -140,30 +142,10 @@ pygame.init()
 screen = pygame.display.set_mode((600, 400))
 pygame.display.set_caption('RecommeNDflix')
 
-# Background
-background = pygame.image.load("cool1.jpg")
+background = pygame.Surface(screen.get_size())
+background = background.convert()
+background.fill(netflix_red)
 
-#background = pygame.Surface(screen.get_size())
-#background = background.convert()
-#background.fill(netflix_red)
-
-
-# Display title screen
-titlef(text_horizontal, text_vertical) 
-start_font = pygame.font.Font('scriptfont.ttf', 40)
-start = start_font.render("(Start)", 1, (200, 200, 200))
-
-NDImg = pygame.image.load('NotreDameFightingIrish.svg.png')
-NDImg = pygame.transform.scale(NDImg,(53, 45))
-#def logo(x,y):
-#    background.blit(NDImg, (x,y))
-logo(327, 90)
-
-background.blit(start, (text_horizontal + 160, text_vertical + 150))
-
-# Blit everything to the screen
-screen.blit(background, (0, 0))
-pygame.display.flip()
 
 # ----------------- PROGRAM -------------------------
 
@@ -172,24 +154,49 @@ pygame.display.flip()
 while run:
     # ----- Title Screen ----
     while title_screen:
+
+        # Background
+        #background = pygame.image.load("cool1.jpg")
+        background.fill(netflix_red)
+
+        # Display title screen
+        titlef(text_horizontal, text_vertical) 
+        start_font = pygame.font.Font('scriptfont.ttf', 40)
+        start = start_font.render("(Start)", 1, (200, 200, 200))
+
+        NDImg = pygame.image.load('NotreDameFightingIrish.svg.png')
+        NDImg = pygame.transform.scale(NDImg,(53, 45))
+        logo(327, 90)
+
+        background.blit(start, (text_horizontal + 160, text_vertical + 150))
+
+        # Blit everything to the screen
+        screen.blit(background, (0, 0))
+        pygame.display.flip()
+
         event = pygame.event.poll()
         if event.type == pygame.QUIT:
             title_screen = False
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-	    print x, y
+            print x, y
             if x > 250 and x < 355:
                 if y > 250 and y < 310:
                     menu_screen = True
                     title_screen = False 
+            #if x > 80  and x < 490:	
+            #    if y > 88 and y < 136:
+            #        title_screen = False
+            #        easter_egg = True
     # ---- User Interactive/Menu Screen ----
     while menu_screen:
 	# Background color
-        background.fill((185,9,11))
+#	background = pygame.image.load('cool1.jpg')
 	
+        background.fill(netflix_red)
 	# Message about day/time of day
-    	day_font = pygame.font.Font('basicsansserif.ttf', 30)	
+    	day_font = pygame.font.Font('basicsansserif.ttf', 28)	
     	day_message = day_font.render("You made it to "+str(DAY)+" "+time_of_day+"! Good for you!", 1, (255, 255, 255))
 
         # Strings to display by genre checkboxes
@@ -216,12 +223,12 @@ while run:
             option3_quote = "Toto, I've a feeling we're not in Kansas anymore. (The Wizard of Oz, 1939)"
 
 	# Question about Genre
-	genre_font = pygame.font.Font('basicsansserif.ttf', 30)
+	genre_font = pygame.font.Font('basicsansserif.ttf', 28)
 	genre = genre_font.render("What do you feel like watching?", 1, (255, 255, 255))
 
 	# --------- Genre Options ------------ 
-        options_font = pygame.font.Font('sans.ttf', 14)
-        quote_font = pygame.font.Font('sansitalic.ttf', 12)
+        options_font = pygame.font.Font('sans.ttf', 16)
+        quote_font = pygame.font.Font('sansitalic.ttf', 14)
 
 	# Names for each genre
         option1 = options_font.render(option1_string, 1, (255, 255, 255))
@@ -232,12 +239,12 @@ while run:
         quote3 = quote_font.render(option3_quote, 1, (255, 255, 255))
   
 	# Checkboxes for each genre
-        pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y, checkbox_size, checkbox_size), checkbox_thickness)
-	pygame.draw.rect(background, checkbox_color[0], (checkbox_x+2, checkbox_y+2, checkbox_size-4, checkbox_size-4), 0)    	
-	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+25, checkbox_size, checkbox_size), checkbox_thickness)    	
-	pygame.draw.rect(background, checkbox_color[1], (checkbox_x+2, checkbox_y+27, checkbox_size-4, checkbox_size-4), 0)    	
-	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+50, checkbox_size, checkbox_size), checkbox_thickness)    	
-	pygame.draw.rect(background, checkbox_color[2], (checkbox_x+2, checkbox_y+52, checkbox_size-4, checkbox_size-4), 0)    	
+        pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+3, checkbox_size, checkbox_size), checkbox_thickness)
+	pygame.draw.rect(background, checkbox_color[0], (checkbox_x+2, checkbox_y+5, checkbox_size-4, checkbox_size-4), 0)    	
+	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+38, checkbox_size, checkbox_size), checkbox_thickness)    	
+	pygame.draw.rect(background, checkbox_color[1], (checkbox_x+2, checkbox_y+40, checkbox_size-4, checkbox_size-4), 0)    	
+	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+73, checkbox_size, checkbox_size), checkbox_thickness)    	
+	pygame.draw.rect(background, checkbox_color[2], (checkbox_x+2, checkbox_y+75, checkbox_size-4, checkbox_size-4), 0)    	
 
 	# Question about how much time to spend
         time_font = pygame.font.Font("basicsansserif.ttf", 30)
@@ -253,34 +260,33 @@ while run:
 	range4 = options_font.render("All day, everyday, bruh", 1, (255, 255, 255))
   
 	# Checkboxes for each time
-        pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+120, checkbox_size, checkbox_size), checkbox_thickness)
-	pygame.draw.rect(background, time_color[0], (checkbox_x+2, checkbox_y+120+2, checkbox_size-4, checkbox_size-4), 0)    	
-	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+140, checkbox_size, checkbox_size), checkbox_thickness)    	
-	pygame.draw.rect(background, time_color[1], (checkbox_x+2, checkbox_y+142, checkbox_size-4, checkbox_size-4), 0)    	
+        pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+140, checkbox_size, checkbox_size), checkbox_thickness)
+	pygame.draw.rect(background, time_color[0], (checkbox_x+2, checkbox_y+142, checkbox_size-4, checkbox_size-4), 0)    	
 	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+160, checkbox_size, checkbox_size), checkbox_thickness)    	
-	pygame.draw.rect(background, time_color[2], (checkbox_x+2, checkbox_y+162, checkbox_size-4, checkbox_size-4), 0)    	
+	pygame.draw.rect(background, time_color[1], (checkbox_x+2, checkbox_y+162, checkbox_size-4, checkbox_size-4), 0)    	
 	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+180, checkbox_size, checkbox_size), checkbox_thickness)    	
-	pygame.draw.rect(background, time_color[3], (checkbox_x+2, checkbox_y+182, checkbox_size-4, checkbox_size-4), 0)    	
+	pygame.draw.rect(background, time_color[2], (checkbox_x+2, checkbox_y+182, checkbox_size-4, checkbox_size-4), 0)    	
+	pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+200, checkbox_size, checkbox_size), checkbox_thickness)    	
+	pygame.draw.rect(background, time_color[3], (checkbox_x+2, checkbox_y+202, checkbox_size-4, checkbox_size-4), 0)    	
 
         # Continue Button
 	continue_font = pygame.font.Font("scriptfont.ttf", 40)
 	continue_button = continue_font.render("Continue", 1, (205, 205, 205))
 
-#	background = pygame.image.load("cool1.jpg")
 	# Add everything to background
 	background.blit(day_message, (10,10))
 	background.blit(genre, (10, 35))
 	background.blit(option1, (checkbox_x + 15, checkbox_y))
-        background.blit(quote1, (checkbox_x + 15, checkbox_y + 12))
-	background.blit(option2, (checkbox_x + 15, checkbox_y + 25))
-        background.blit(quote2, (checkbox_x + 15, checkbox_y + 37))
-	background.blit(option3, (checkbox_x + 15, checkbox_y + 50))
-        background.blit(quote3, (checkbox_x + 15, checkbox_y + 62))
-	background.blit(time, (10, 150))
-        background.blit(range1, (checkbox_x+15, checkbox_y+120))
-        background.blit(range2, (checkbox_x + 15, checkbox_y+140))
-        background.blit(range3, (checkbox_x + 15, checkbox_y + 160))
-        background.blit(range4, (checkbox_x + 15, checkbox_y + 180))
+        background.blit(quote1, (checkbox_x + 15, checkbox_y + 15))
+	background.blit(option2, (checkbox_x + 15, checkbox_y + 35))
+        background.blit(quote2, (checkbox_x + 15, checkbox_y + 50))
+	background.blit(option3, (checkbox_x + 15, checkbox_y + 70))
+        background.blit(quote3, (checkbox_x + 15, checkbox_y + 85))
+	background.blit(time, (10, 170))
+        background.blit(range1, (checkbox_x+15, checkbox_y+137))
+        background.blit(range2, (checkbox_x + 15, checkbox_y+157))
+        background.blit(range3, (checkbox_x + 15, checkbox_y + 177))
+        background.blit(range4, (checkbox_x + 15, checkbox_y + 197))
 	background.blit(continue_button, (text_horizontal + 140, text_vertical + 200))
 
 	# Add background to screen
@@ -293,28 +299,28 @@ while run:
             x, y = pygame.mouse.get_pos()
             if x > checkbox_x and x < checkbox_x+checkbox_size:	
                 # First Genre Checkbox Checked
-                if y > checkbox_y and y < checkbox_y+checkbox_size:
+                if y > checkbox_y+3 and y < checkbox_y+checkbox_size+3:
 		    old_color = checkbox_color[0]
                     checkbox_color[0] = toggle_colors(checkbox_color, 0)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[0], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][0]
                 # Second Genre Checkbox Checked
-                if y > checkbox_y+25 and y < checkbox_y+checkbox_size+25:
+                if y > checkbox_y+33 and y < checkbox_y+checkbox_size+33:
 		    old_color = checkbox_color[1]
                     checkbox_color[1] = toggle_colors(checkbox_color, 1)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[1], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][1]
                 # Third Genre Checkbox Checked
-                if y > checkbox_y+50 and y < checkbox_y+checkbox_size+50:
+                if y > checkbox_y+73 and y < checkbox_y+checkbox_size+73:
 		    old_color = checkbox_color[2]
                     checkbox_color[2] = toggle_colors(checkbox_color, 2)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[2], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][2]
                 # First Time Checkbox Checked
-                if y > checkbox_y+120 and y < checkbox_y+checkbox_size+120:
+                if y > checkbox_y+140 and y < checkbox_y+checkbox_size+140:
 		    old_color = time_color[0]
                     time_color[0] = toggle_colors(time_color, 0)	
 		    time_chosen = toggle_chosen(old_color, time_color[0], time_chosen)
@@ -322,7 +328,7 @@ while run:
                         time_final[0] = 0
                         time_final[1] = 90
                 # Second Time Checkbox Checked 
-                if y > checkbox_y+140 and y < checkbox_y+checkbox_size+140:
+                if y > checkbox_y+160 and y < checkbox_y+checkbox_size+160:
 		    old_color = time_color[1]
                     time_color[1] = toggle_colors(time_color, 1)
 		    time_chosen = toggle_chosen(old_color, time_color[1], time_chosen)
@@ -330,7 +336,7 @@ while run:
                         time_final[0] = 90
                         time_final[1] = 150
                 # Third Time Checkbox Checked
-                if y > checkbox_y+160 and y < checkbox_y+checkbox_size+160:
+                if y > checkbox_y+180 and y < checkbox_y+checkbox_size+180:
 		    old_color = time_color[2]
                     time_color[2] = toggle_colors(time_color, 2)
 		    time_chosen = toggle_chosen(old_color, time_color[2], time_chosen)
@@ -338,7 +344,7 @@ while run:
                         time_final[0] = 150
                         time_final[1] = 180
                 # Fourth Time Checkbox Checked
-                if y > checkbox_y+180 and y < checkbox_y+checkbox_size+180:
+                if y > checkbox_y+200 and y < checkbox_y+checkbox_size+200:
 		    old_color = time_color[3]
                     time_color[3] = toggle_colors(time_color, 3)
 		    time_chosen = toggle_chosen(old_color, time_color[3], time_chosen)
@@ -360,38 +366,39 @@ while run:
 
         # ------------------------ DICTIONARY CREATION ---------------------------------
   
-        GENRE_LIST = {}
-        genre_key = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-        movie_titles = ['','','','','','','','','','','','','','','','','','','','']
+        if run_count == 0:
+            GENRE_LIST = {}
+            genre_key = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            movie_titles = ['','','','','','','','','','','','','','','','','','','','']
    
-        url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US'
-        response = requests.get(url)
-        data = response.json()
+            url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US'
+            response = requests.get(url)
+            data = response.json()
 
-        i = 0
-        for genre in data['genres']:
-            genre_key[i] = genre['id']
-            i = i + 1
+            i = 0
+            for genre in data['genres']:
+                genre_key[i] = genre['id']
+                i = i + 1
             
-        url1 = "https://api.themoviedb.org/3/genre/"
-        url2 = "/movies?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US"
-        GENRE_LIST = {k: [] for k in genre_key}
-        for genre_id in genre_key:
-            URL = url1+str(genre_id)+url2
-            response2 = requests.get(URL)
-            alldata = response2.json()
-            j = 0
-            force_stop = False
-            # Stores all of the movies associated with a genre in a list
-            if not force_stop:
-                for movies in alldata['results']:
-                    movie_titles[j] = movies['original_title']
-                    # Sets the value for each key
-                    GENRE_LIST[genre_id].append(movie_titles[j])
-                    j = j + 1
-                    if j == 20:
-                        force_stop = True
-                        break
+            url1 = "https://api.themoviedb.org/3/genre/"
+            url2 = "/movies?api_key=2fa8f55ea7e61c1512068ada4ad5b25a&language=en-US"
+            GENRE_LIST = {k: [] for k in genre_key}
+            for genre_id in genre_key:
+                URL = url1+str(genre_id)+url2
+                response2 = requests.get(URL)
+                alldata = response2.json()
+                j = 0
+                force_stop = False
+                # Stores all of the movies associated with a genre in a list
+                if not force_stop:
+                    for movies in alldata['results']:
+                        movie_titles[j] = movies['original_title']
+                        # Sets the value for each key
+                        GENRE_LIST[genre_id].append(movie_titles[j])
+                        j = j + 1
+                        if j == 20:
+                            force_stop = True
+                            break
 
         # --------------- END OF DICTIONARY CREATION ---------------
 
@@ -453,8 +460,8 @@ while run:
          
     # ---------- Results Screen ------------
     while results_screen:
-	background = pygame.image.load('cool1.jpg')
-#        background.fill((185,9,11))
+	#background = pygame.image.load('cool1.jpg')
+        background.fill(netflix_red)
         xpos = 80
         ypos = 100
         
@@ -478,5 +485,25 @@ while run:
         if event.type == pygame.QUIT:
             results_screen = False
             run = False
+        #if event.type == pygame.MOUSEBUTTONDOWN: 
+         #   x, y = pygame.mouse.get_pos()
+          #  print x, y
+           # if x > 80  and x < 490:	
+            #    if y > 53 and y < 101:
+             #       results_screen = False
+              #      title_screen = True
+               #     run_count = run_count + 1
+                #    del chosen_movies[:]
+                 #   time_tally = 0
+                  #  time_chosen = 0
+                   # genre_chosen = 0
+                    #time_final[0] = 0
+                    #time_final[1] = 0
+   # while easter_egg:
+    #    background = pygame.image.load('cool1.jpg')
+     #   event = pygame.event.poll()
+      #  if event.type == pygame.QUIT:
+       #     easter_egg = False
+        #    run = False
 
 #if __name__ == '__main__': main()
