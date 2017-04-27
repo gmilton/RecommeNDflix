@@ -15,14 +15,14 @@ from pygame.locals import *
 # Function to draw title
 def titlef(horizontal_place, vertical_place):
     title_font = pygame.font.SysFont(None, 52)
-    title = title_font.render("R E C O M M E N D F L I X", 1, (255, 255, 255))
+    title = title_font.render("R E C O M M E      F L I X", 1, (255, 255, 255))
     outlinef(horizontal_place, vertical_place)
     background.blit(title, (horizontal_place,vertical_place))
 
 # Function to give title outline
 def outlinef(text_horizontal, text_vertical):
     outline_font = pygame.font.Font(None, 52)
-    outline = outline_font.render("R E C O M M E N D F L I X", 1, (10, 10, 10))
+    outline = outline_font.render("R E C O M M E      F L I X", 1, (10, 10, 10))
     background.blit(outline, (text_horizontal - 2,text_vertical - 1)) # 1 up, 1 left
     background.blit(outline, (text_horizontal - 1,text_vertical - 1))
     background.blit(outline, (text_horizontal,text_vertical - 1))
@@ -59,12 +59,17 @@ def toggle_chosen(old, new, chosen):
     else:
         return chosen
 
+#ND logo placement function
+def logo(x,y):
+    background.blit(NDImg, (x,y))
+
+
 # ---------- VARIABLES -----------------
 #def main:
 
 # Integers
 text_vertical = 100
-text_horizontal = 85
+text_horizontal = 80
 checkbox_x = 20
 checkbox_y = 70
 checkbox_size = 10
@@ -136,17 +141,24 @@ screen = pygame.display.set_mode((600, 400))
 pygame.display.set_caption('RecommeNDflix')
 
 # Background
-#bg = pygame.image.load("Pattern_1.png")
+background = pygame.image.load("cool1.jpg")
 
-background = pygame.Surface(screen.get_size())
-background = background.convert()
-background.fill(netflix_red)
+#background = pygame.Surface(screen.get_size())
+#background = background.convert()
+#background.fill(netflix_red)
 
 
 # Display title screen
 titlef(text_horizontal, text_vertical) 
 start_font = pygame.font.Font('scriptfont.ttf', 40)
 start = start_font.render("(Start)", 1, (200, 200, 200))
+
+NDImg = pygame.image.load('NotreDameFightingIrish.svg.png')
+NDImg = pygame.transform.scale(NDImg,(53, 45))
+#def logo(x,y):
+#    background.blit(NDImg, (x,y))
+logo(327, 90)
+
 background.blit(start, (text_horizontal + 160, text_vertical + 150))
 
 # Blit everything to the screen
@@ -166,6 +178,7 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
+	    print x, y
             if x > 250 and x < 355:
                 if y > 250 and y < 310:
                     menu_screen = True
@@ -208,7 +221,7 @@ while run:
 
 	# --------- Genre Options ------------ 
         options_font = pygame.font.Font('sans.ttf', 14)
-        quote_font = pygame.font.Font('sansitalic.ttf', 13)
+        quote_font = pygame.font.Font('sansitalic.ttf', 12)
 
 	# Names for each genre
         option1 = options_font.render(option1_string, 1, (255, 255, 255))
@@ -253,15 +266,16 @@ while run:
 	continue_font = pygame.font.Font("scriptfont.ttf", 40)
 	continue_button = continue_font.render("Continue", 1, (205, 205, 205))
 
+#	background = pygame.image.load("cool1.jpg")
 	# Add everything to background
 	background.blit(day_message, (10,10))
 	background.blit(genre, (10, 35))
 	background.blit(option1, (checkbox_x + 15, checkbox_y))
-        background.blit(quote1, (checkbox_x + 15, checkbox_y + 10))
+        background.blit(quote1, (checkbox_x + 15, checkbox_y + 12))
 	background.blit(option2, (checkbox_x + 15, checkbox_y + 25))
-        background.blit(quote2, (checkbox_x + 15, checkbox_y + 35))
+        background.blit(quote2, (checkbox_x + 15, checkbox_y + 37))
 	background.blit(option3, (checkbox_x + 15, checkbox_y + 50))
-        background.blit(quote3, (checkbox_x + 15, checkbox_y + 60))
+        background.blit(quote3, (checkbox_x + 15, checkbox_y + 62))
 	background.blit(time, (10, 150))
         background.blit(range1, (checkbox_x+15, checkbox_y+120))
         background.blit(range2, (checkbox_x + 15, checkbox_y+140))
@@ -439,13 +453,14 @@ while run:
          
     # ---------- Results Screen ------------
     while results_screen:
-        background.fill((185,9,11))
+	background = pygame.image.load('cool1.jpg')
+#        background.fill((185,9,11))
         xpos = 80
         ypos = 100
         
         # Display title
         titlef(80, 60)
-        
+	logo(327, 55)        
         # Display movie titles
         for item in chosen_movies:      
             results_font = pygame.font.Font("basicsansserif.ttf", 18)
