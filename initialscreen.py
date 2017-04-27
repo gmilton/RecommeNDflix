@@ -136,9 +136,12 @@ screen = pygame.display.set_mode((600, 400))
 pygame.display.set_caption('RecommeNDflix')
 
 # Background
+#bg = pygame.image.load("Pattern_1.png")
+
 background = pygame.Surface(screen.get_size())
 background = background.convert()
 background.fill(netflix_red)
+
 
 # Display title screen
 titlef(text_horizontal, text_vertical) 
@@ -204,8 +207,8 @@ while run:
 	genre = genre_font.render("What do you feel like watching?", 1, (255, 255, 255))
 
 	# --------- Genre Options ------------ 
-        options_font = pygame.font.SysFont(None, 16)
-        quote_font = pygame.font.SysFont(None, 16, False, True)
+        options_font = pygame.font.Font('sans.ttf', 14)
+        quote_font = pygame.font.Font('sansitalic.ttf', 13)
 
 	# Names for each genre
         option1 = options_font.render(option1_string, 1, (255, 255, 255))
@@ -445,8 +448,8 @@ while run:
         
         # Display movie titles
         for item in chosen_movies:      
-            results_font = pygame.font.Font("basicsansserif.ttf", 20)
-            results = results_font.render(item, 1, (255, 255, 255))
+            results_font = pygame.font.Font("basicsansserif.ttf", 18)
+            results = results_font.render(item+" ("+str(final_dict[item])+" minutes)", 1, (255, 255, 255))
             background.blit(results, (xpos, ypos))
             ypos = ypos + 30
    
