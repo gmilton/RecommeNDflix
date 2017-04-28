@@ -156,8 +156,8 @@ while run:
     while title_screen:
 
         # Background
-        #background = pygame.image.load("cool1.jpg")
-        background.fill(netflix_red)
+        background = pygame.image.load("cool1.jpg")
+        #background.fill(netflix_red)
 
         # Display title screen
         titlef(text_horizontal, text_vertical) 
@@ -192,9 +192,9 @@ while run:
     # ---- User Interactive/Menu Screen ----
     while menu_screen:
 	# Background color
-#	background = pygame.image.load('cool1.jpg')
+	background = pygame.image.load('cool1.jpg')
 	
-        background.fill(netflix_red)
+#        background.fill(netflix_red)
 	# Message about day/time of day
     	day_font = pygame.font.Font('basicsansserif.ttf', 28)	
     	day_message = day_font.render("You made it to "+str(DAY)+" "+time_of_day+"! Good for you!", 1, (255, 255, 255))
@@ -306,7 +306,7 @@ while run:
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][0]
                 # Second Genre Checkbox Checked
-                if y > checkbox_y+33 and y < checkbox_y+checkbox_size+33:
+                if y > checkbox_y+38 and y < checkbox_y+checkbox_size+38:
 		    old_color = checkbox_color[1]
                     checkbox_color[1] = toggle_colors(checkbox_color, 1)
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[1], genre_chosen)
@@ -327,8 +327,6 @@ while run:
 		    if time_chosen:
                         time_final[0] = 0
                         time_final[1] = 90
-                    print time_final[0]
-                    print time_final[1]
                 # Second Time Checkbox Checked 
                 if y > checkbox_y+160 and y < checkbox_y+checkbox_size+160:
 		    old_color = time_color[1]
@@ -426,8 +424,8 @@ while run:
                     except ValueError:
                         pass
 
-        for k in final_dict:
-            print k, final_dict[k]
+        #for k in final_dict:
+        #    print k, final_dict[k]
 
         # Randomize list
 	keys = final_dict.keys()
@@ -465,8 +463,8 @@ while run:
          
     # ---------- Results Screen ------------
     while results_screen:
-	#background = pygame.image.load('cool1.jpg')
-        background.fill(netflix_red)
+	background = pygame.image.load('cool1.jpg')
+        #background.fill(netflix_red)
         xpos = 80
         ypos = 100
         
@@ -492,7 +490,6 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN: 
             x, y = pygame.mouse.get_pos()
-            print x, y
             if x > 80  and x < 490:	
                 if y > 53 and y < 101:
                     results_screen = False
@@ -502,16 +499,7 @@ while run:
                     time_tally = 0
                     time_chosen = True
                     genre_chosen = True
-                    time_final[0] = 0
-                    time_final[1] = 0
                     final_dict.clear()
-                    print "run_count: "+str(run_count)
-                    for item in chosen_movies:
-                        print "chosen_movies: "+item
-                    print time_tally
-                    print time_chosen
-                    print genre_chosen
-                    print time_final[0], time_final[1]
    # while easter_egg:
     #    background = pygame.image.load('cool1.jpg')
      #   event = pygame.event.poll()
