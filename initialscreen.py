@@ -327,6 +327,8 @@ while run:
 		    if time_chosen:
                         time_final[0] = 0
                         time_final[1] = 90
+                    print time_final[0]
+                    print time_final[1]
                 # Second Time Checkbox Checked 
                 if y > checkbox_y+160 and y < checkbox_y+checkbox_size+160:
 		    old_color = time_color[1]
@@ -424,6 +426,9 @@ while run:
                     except ValueError:
                         pass
 
+        for k in final_dict:
+            print k, final_dict[k]
+
         # Randomize list
 	keys = final_dict.keys()
         random.shuffle(keys)
@@ -485,20 +490,28 @@ while run:
         if event.type == pygame.QUIT:
             results_screen = False
             run = False
-        #if event.type == pygame.MOUSEBUTTONDOWN: 
-         #   x, y = pygame.mouse.get_pos()
-          #  print x, y
-           # if x > 80  and x < 490:	
-            #    if y > 53 and y < 101:
-             #       results_screen = False
-              #      title_screen = True
-               #     run_count = run_count + 1
-                #    del chosen_movies[:]
-                 #   time_tally = 0
-                  #  time_chosen = 0
-                   # genre_chosen = 0
-                    #time_final[0] = 0
-                    #time_final[1] = 0
+        if event.type == pygame.MOUSEBUTTONDOWN: 
+            x, y = pygame.mouse.get_pos()
+            print x, y
+            if x > 80  and x < 490:	
+                if y > 53 and y < 101:
+                    results_screen = False
+                    title_screen = True
+                    run_count = run_count + 1
+                    del chosen_movies[:]
+                    time_tally = 0
+                    time_chosen = True
+                    genre_chosen = True
+                    time_final[0] = 0
+                    time_final[1] = 0
+                    final_dict.clear()
+                    print "run_count: "+str(run_count)
+                    for item in chosen_movies:
+                        print "chosen_movies: "+item
+                    print time_tally
+                    print time_chosen
+                    print genre_chosen
+                    print time_final[0], time_final[1]
    # while easter_egg:
     #    background = pygame.image.load('cool1.jpg')
      #   event = pygame.event.poll()
