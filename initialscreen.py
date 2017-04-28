@@ -185,10 +185,10 @@ while run:
                 if y > 250 and y < 310:
                     menu_screen = True
                     title_screen = False 
-            #if x > 80  and x < 490:	
-            #    if y > 88 and y < 136:
-            #        title_screen = False
-            #        easter_egg = True
+            if x > 325  and x < 380:	
+                if y > 88 and y < 136:
+                    title_screen = False
+                    easter_egg = True
     # ---- User Interactive/Menu Screen ----
     while menu_screen:
 	# Background color
@@ -500,11 +500,16 @@ while run:
                     time_chosen = True
                     genre_chosen = True
                     final_dict.clear()
-   # while easter_egg:
-    #    background = pygame.image.load('cool1.jpg')
-     #   event = pygame.event.poll()
-      #  if event.type == pygame.QUIT:
-       #     easter_egg = False
-        #    run = False
+    while easter_egg:
+        background = pygame.image.load('cool1.jpg')
+	ee_font = pygame.font.Font("scriptfont.ttf", 30)
+	ee = ee_font.render("The Mobile Leprechaun is real, kids!", 1, (205, 205, 205)) 
+	background.blit(ee, (text_horizontal + 20, text_vertical + 50))
+        screen.blit(background, (0,0))
+        pygame.display.flip()
+        event = pygame.event.poll()
+        if event.type == pygame.QUIT:
+            easter_egg = False
+            run = False
 
 #if __name__ == '__main__': main()
