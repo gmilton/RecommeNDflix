@@ -19,7 +19,7 @@ def titlef(horizontal_place, vertical_place):
     outlinef(horizontal_place, vertical_place)
     background.blit(title, (horizontal_place,vertical_place))
 
-# Function to give title outline
+# Function to give title outline (black background)
 def outlinef(text_horizontal, text_vertical):
     outline_font = pygame.font.Font(None, 52)
     outline = outline_font.render("R E C O M M E      F L I X", 1, (10, 10, 10))
@@ -85,8 +85,9 @@ genre_chosen = False
 time_chosen = False
 easter_egg = False
 
-# Colors
+# Netflix red color
 netflix_red = (185, 9, 11)
+#checkbox background color
 light_paprika = (255, 153, 153)
 
 # Lists
@@ -157,7 +158,6 @@ while run:
 
         # Background
         background = pygame.image.load("cool1.jpg")
-        #background.fill(netflix_red)
 
         # Display title screen
         titlef(text_horizontal, text_vertical) 
@@ -175,6 +175,8 @@ while run:
         pygame.display.flip()
 
         event = pygame.event.poll()
+
+	#location of mouse click determines the progression to next screen
         if event.type == pygame.QUIT:
             title_screen = False
             run = False
@@ -189,12 +191,12 @@ while run:
                 if y > 88 and y < 136:
                     title_screen = False
                     easter_egg = True
+
     # ---- User Interactive/Menu Screen ----
     while menu_screen:
 	# Background color
 	background = pygame.image.load('cool1.jpg')
 	
-#        background.fill(netflix_red)
 	# Message about day/time of day
     	day_font = pygame.font.Font('basicsansserif.ttf', 28)	
     	day_message = day_font.render("You made it to "+str(DAY)+" "+time_of_day+"! Good for you!", 1, (255, 255, 255))
@@ -212,8 +214,8 @@ while run:
             option1_quote = 'Here at NASA we all pee the same color. (Hidden Figures, 2016)'
             option2_string = 'Something adventurous'
             option2_quote = '...I will look for you, I will find you, and I will kill you. (Taken, 2008)'
-            option3_string = 'Something sporty'
-            option3_quote = "There's no crying in baseball! (A League of Their Own, 1992)"
+            option3_string = 'Something fun and exciting!'
+            option3_quote = "They call it a Royale with cheese. (Pulp Fiction, 1994)"
         if (time_of_day == 'night'):
             option1_string = 'Something scary'
             option1_quote = 'Whenever feasible, one should always try to eat the rude. (The Silence of the Lambs, 1991)'
@@ -257,7 +259,7 @@ while run:
        	range1 = options_font.render("0 - 1.5 hours", 1, (255, 255, 255))
         range2 = options_font.render("1.5 - 2.5 hours", 1, (255, 255, 255))
         range3 = options_font.render("2.5 - 3 hours", 1, (255, 255, 255))
-	range4 = options_font.render("All day, everyday, bruh", 1, (255, 255, 255))
+	range4 = options_font.render("I have all of the time in the world!", 1, (255, 255, 255))
   
 	# Checkboxes for each time
         pygame.draw.rect(background, (205,205,205), (checkbox_x, checkbox_y+140, checkbox_size, checkbox_size), checkbox_thickness)
@@ -298,6 +300,7 @@ while run:
 	if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
             if x > checkbox_x and x < checkbox_x+checkbox_size:	
+
                 # First Genre Checkbox Checked
                 if y > checkbox_y+3 and y < checkbox_y+checkbox_size+3:
 		    old_color = checkbox_color[0]
@@ -305,6 +308,7 @@ while run:
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[0], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][0]
+
                 # Second Genre Checkbox Checked
                 if y > checkbox_y+38 and y < checkbox_y+checkbox_size+38:
 		    old_color = checkbox_color[1]
@@ -312,6 +316,7 @@ while run:
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[1], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][1]
+
                 # Third Genre Checkbox Checked
                 if y > checkbox_y+73 and y < checkbox_y+checkbox_size+73:
 		    old_color = checkbox_color[2]
@@ -319,6 +324,7 @@ while run:
 		    genre_chosen = toggle_chosen(old_color, checkbox_color[2], genre_chosen)
 		    if genre_chosen:
                         genre_final = genre_lists[time_index][2]
+
                 # First Time Checkbox Checked
                 if y > checkbox_y+140 and y < checkbox_y+checkbox_size+140:
 		    old_color = time_color[0]
@@ -327,6 +333,7 @@ while run:
 		    if time_chosen:
                         time_final[0] = 0
                         time_final[1] = 90
+
                 # Second Time Checkbox Checked 
                 if y > checkbox_y+160 and y < checkbox_y+checkbox_size+160:
 		    old_color = time_color[1]
@@ -335,6 +342,7 @@ while run:
 		    if time_chosen:
                         time_final[0] = 90
                         time_final[1] = 150
+
                 # Third Time Checkbox Checked
                 if y > checkbox_y+180 and y < checkbox_y+checkbox_size+180:
 		    old_color = time_color[2]
@@ -343,6 +351,7 @@ while run:
 		    if time_chosen:
                         time_final[0] = 150
                         time_final[1] = 180
+
                 # Fourth Time Checkbox Checked
                 if y > checkbox_y+200 and y < checkbox_y+checkbox_size+200:
 		    old_color = time_color[3]
@@ -351,6 +360,7 @@ while run:
 		    if time_chosen:
                         time_final[0] = 0
                         time_final[1] = -1;
+
             # Continue Button Clicked
             if x > 220 and x < 360:
                 if y > 300 and y < 360:
@@ -361,10 +371,10 @@ while run:
             menu_screen = False
             run = False
 
-    # --------- Get Movies From Dictionary Based On Genre And Time Range Chosen ------------
+    # ------ Get Movies From Dictionary Based On Genre And Time Range Chosen --------
     if results_screen: 
 
-        # ------------------------ DICTIONARY CREATION ---------------------------------
+        # ------------------- DICTIONARY CREATION -----------------------------
   
         if run_count == 0:
             GENRE_LIST = {}
@@ -389,10 +399,12 @@ while run:
                 alldata = response2.json()
                 j = 0
                 force_stop = False
+
                 # Stores all of the movies associated with a genre in a list
                 if not force_stop:
                     for movies in alldata['results']:
                         movie_titles[j] = movies['original_title']
+
                         # Sets the value for each key
                         GENRE_LIST[genre_id].append(movie_titles[j])
                         j = j + 1
@@ -424,9 +436,6 @@ while run:
                     except ValueError:
                         pass
 
-        #for k in final_dict:
-        #    print k, final_dict[k]
-
         # Randomize list
 	keys = final_dict.keys()
         random.shuffle(keys)
@@ -439,6 +448,7 @@ while run:
             time_tally = final_dict[keys[count]]
             chosen_movies.append(keys[count])
             count = count + 1
+
             # Keep movies below maximum
             if time_final[1] != -1:
                 while time_tally < time_final[1] and count < len(final_dict):
@@ -453,9 +463,11 @@ while run:
                     time_tally = time_tally + pick_time
                     chosen_movies.append(keys[count])
                     count = count + 1 
+
             # Exit if above minimum time limit
             if time_tally > time_final[0]:
                 break
+
             # Reset movies chosen otherwise and iterate to begin with next movie
             else:
                 main_count = main_count + 1
@@ -471,6 +483,7 @@ while run:
         # Display title
         titlef(80, 60)
 	logo(327, 55)        
+
         # Display movie titles
         for item in chosen_movies:      
             results_font = pygame.font.Font("basicsansserif.ttf", 18)
