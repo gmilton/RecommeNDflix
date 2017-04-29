@@ -67,6 +67,12 @@ def logo(x,y):
 # ---------- VARIABLES -----------------
 #def main:
 
+# Colors
+OKBLUE = '\033[94m'
+RED='\033[0;31m'
+OKGREEN = '\033[92m'
+DEFAULT_COLOR='\033[38;5;247m'
+
 # Integers
 text_vertical = 100
 text_horizontal = 80
@@ -75,6 +81,7 @@ checkbox_y = 70
 checkbox_size = 10
 checkbox_thickness = 2
 run_count = 0
+summary_counter = 1
 
 # Booleans
 run = True
@@ -484,7 +491,25 @@ while run:
         titlef(80, 60)
 	logo(327, 55)        
 
-        # Display movie titles
+        # Display movie titles, plot summary, and rating in terminal
+        if summary_counter == 1:
+            for choice1 in chosen_movies:
+                print OKBLUE + choice1 
+                omdbresponse_new = requests.get(omdburl+'t='+choice1)
+                omdbdata_new = omdbresponse_new.json()
+                print DEFAULT_COLOR + omdbdata_new['Plot']
+                try:
+                    rating = float(omdbdata_new['imdbRating'])
+                    if rating > 7.0:
+                        print OKGREEN + 'This movie is highly rated!'
+	                print DEFAULT_COLOR + ' '		
+                    else:
+                        print RED + 'This movie is not as highly rated as others.'
+                        print DEFAULT_COLOR + ' '
+                except ValueError:
+                    pass
+            summary_counter = summary_counter + 1
+        # Display movie titles in results window
         for item in chosen_movies:      
             results_font = pygame.font.Font("basicsansserif.ttf", 18)
             results = results_font.render(item+" ("+str(final_dict[item])+" minutes)", 1, (255, 255, 255))
