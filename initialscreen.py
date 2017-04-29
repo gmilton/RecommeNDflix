@@ -189,7 +189,7 @@ while run:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
-            print x, y
+        #    print x, y
             if x > 250 and x < 355:
                 if y > 250 and y < 310:
                     menu_screen = True
@@ -537,6 +537,7 @@ while run:
                     time_tally = 0
                     time_chosen = True
                     genre_chosen = True
+		    summary_counter = 1
                     final_dict.clear()
     while easter_egg:
         background = pygame.image.load('cool1.jpg')
