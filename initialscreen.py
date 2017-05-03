@@ -542,8 +542,11 @@ while run:
     while easter_egg:
         background = pygame.image.load('cool1.jpg')
 	ee_font = pygame.font.Font("scriptfont.ttf", 30)
-	ee = ee_font.render("The Mobile Leprechaun is real, kids!", 1, (205, 205, 205)) 
-	background.blit(ee, (text_horizontal + 20, text_vertical + 50))
+	ee = ee_font.render("The Mobile Leprechaun is real kids", 1, (205, 205, 205)) 
+	background.blit(ee, (text_horizontal + 20, text_vertical - 50))
+	rainbow = pygame.image.load('mobile.jpeg')
+	rainbow = pygame.transform.scale(rainbow,(150, 225))
+    	background.blit(rainbow, (250,125))
         screen.blit(background, (0,0))
         pygame.display.flip()
         event = pygame.event.poll()
