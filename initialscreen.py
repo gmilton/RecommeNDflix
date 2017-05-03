@@ -382,7 +382,8 @@ while run:
     if results_screen: 
 
         # ------------------- DICTIONARY CREATION -----------------------------
-  
+ 
+	#initialize the dictionary 
         if run_count == 0:
             GENRE_LIST = {}
             genre_key = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -483,7 +484,6 @@ while run:
     # ---------- Results Screen ------------
     while results_screen:
 	background = pygame.image.load('cool1.jpg')
-        #background.fill(netflix_red)
         xpos = 80
         ypos = 100
         
@@ -509,7 +509,8 @@ while run:
                 except ValueError:
                     pass
             summary_counter = summary_counter + 1
-        # Display movie titles in results window
+     
+       # Display movie titles in results window
         for item in chosen_movies:      
             results_font = pygame.font.Font("basicsansserif.ttf", 18)
             results = results_font.render(item+" ("+str(final_dict[item])+" minutes)", 1, (255, 255, 255))
