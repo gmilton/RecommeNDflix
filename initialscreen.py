@@ -11,7 +11,6 @@ import random
 from pygame.locals import *
 
 # ---------------- FUNCTIONS ------------------
-
 # Function to draw title
 def titlef(horizontal_place, vertical_place):
     title_font = pygame.font.SysFont(None, 52)
